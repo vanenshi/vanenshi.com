@@ -1,5 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { Global } from '@emotion/react';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import fontFace from 'lib/fontface';
 import theme from 'lib/theme';
 import { DefaultSeo } from 'next-seo';
@@ -15,6 +17,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <Global styles={fontFace} />
         <Component {...pageProps} />
       </ChakraProvider>
+      <SpeedInsights />
+      <Analytics />
     </>
   );
 }

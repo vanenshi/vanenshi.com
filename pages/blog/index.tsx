@@ -12,8 +12,9 @@ import { useRouter } from 'next/router';
 export default function Page() {
   const search = useBlogSearch();
 
-  const { isReady } = useRouter();
-  if (!isReady) return null;
+  // TODO: why this code was written?
+  // const { isReady } = useRouter();
+  // if (!isReady) return null;
 
   return (
     <Container>

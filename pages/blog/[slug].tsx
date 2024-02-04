@@ -7,7 +7,6 @@ import MDXComponents from 'components/mdx-components';
 import { BlogIcon } from 'components/nav-icons';
 import SEO from 'components/seo';
 import { TwitterIcon } from 'components/social-icons';
-import SubscribeForm from 'components/subscribe-form';
 import { Blog, allBlogs } from 'contentlayer/generated';
 import formatDate from 'lib/format-date';
 import { getAbsoluteURL } from 'lib/router-utils';
@@ -95,12 +94,7 @@ export default function BlogPage({ blog, ogImageUrl }: { blog: Blog; ogImageUrl:
           </LinkItem>
         </Flex>
 
-        <Box as="hr" borderColor="whiteAlpha.200" mt="3rem" />
-
-        <SubscribeForm />
-
         <Box as="hr" borderColor="whiteAlpha.200" mt="3rem" mb="9rem" />
-
         <AuthorProfile />
       </Box>
     </Container>
