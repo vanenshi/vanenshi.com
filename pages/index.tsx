@@ -34,7 +34,7 @@ import sortByPublishedDate from 'lib/sort';
 import tools from 'lib/tools';
 import Image from 'next/image';
 import Link from 'next/link';
-import siteConfig from 'site.config';
+import { siteConfig } from 'site.config';
 
 function AchievementItem({ icon, children }) {
   return (

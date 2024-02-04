@@ -6,7 +6,7 @@ import rehypeCodeTitles from 'rehype-code-titles';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
-import siteConfig from './site.config';
+import { siteConfig } from './site.config';
 
 const computedFields: ComputedFields = {
   readingTime: {

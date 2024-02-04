@@ -1,5 +1,5 @@
 import { Box, Heading, HStack, Text } from '@chakra-ui/react';
-import siteConfig from 'site.config';
+import { siteConfig } from 'site.config';
 import LinkItem from './link-item';
 import { EmailIcon, GithubIcon, LinkedInIcon } from './social-icons';
 

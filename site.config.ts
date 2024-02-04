@@ -19,39 +19,44 @@ export const tags = [
   'ci',
 ];
 
-const shared = {
+const me = {
   name: 'Amir Hossein Shekari',
-  repo: 'https://github.com/segunadebayo/adebayosegun.com',
-  editUrl: 'https://github.com/segunadebayo/adebayosegun.com/edit/main/data/',
-  website: 'https://adebayosegun.com',
-  title:
-    'Segun Adebayo (aka Sage) - UI Engineer (Design Systems), Software Developer and Product Designer',
+  nickname: 'Vanenshi',
+};
+
+const shared = {
+  ...me,
+  repo: 'https://github.com/vanenshi/vanenshi.com',
+  editUrl: 'https://github.com/vanenshi/vanenshi.com/edit/main/data/',
+  website: 'https://vanenshi.com',
+  title: `${me.name} (aka ${me.nickname}) - Software Developer`,
   description:
     'UI Engineer passionate about design systems, state machines, accessibility, DX and Rust.',
   image: 'https://adebayosegun.com/static/images/banner.png',
 };
 
-const siteConfig = {
+export const siteConfig = {
   name: shared.name,
+  nickname: shared.nickname,
   image: shared.image,
   type: 'website',
   title: shared.title,
-  titleTemplate: '%s - Segun Adebayo',
+  titleTemplate: `%s - ${shared.name}`,
   description: shared.description,
   siteUrl: shared.website,
   profiles: {
-    github: 'https://github.com/segunadebayo',
-    twitter: 'https://twitter.com/thesegunadebayo',
-    linkedin: 'https://linkedin.com/in/thesegunadebayo',
-    email: 'mailto:sage@adebayosegun.com',
+    github: 'https://github.com/vanenshi',
+    twitter: 'https://twitter.com/vanenshi',
+    linkedin: 'https://linkedin.com/in/vanenshi',
+    email: 'mailto:vanenshi@gmail.com',
   },
   repo: {
     url: shared.repo,
     editUrl: shared.editUrl,
   },
   twitter: {
-    handle: '@thesegunadebayo',
-    site: '@thesegunadebayo',
+    handle: '@vanenshi',
+    site: '@vanenshi',
     cardType: 'summary_large_image',
   },
   openGraph: {
@@ -66,10 +71,8 @@ const siteConfig = {
         url: 'https://adebayosegun.com/static/images/banner.png',
         width: 1200,
         height: 630,
-        alt: 'Segun Adebayo (aka Sage) - UI Engineer (Design Systems), Software Developer and Product Designer',
+        alt: shared.title,
       },
     ],
   },
 };
-
-export default siteConfig;
