@@ -17,10 +17,10 @@ export default function AuthorProfile() {
       <Box>
         <Heading size="md">{`Written by Segun Adebayo (Sage)`}</Heading>
         <Text mt="4" lineHeight="taller">
-          Sage is a Github Star <Emoji label="Github star">🌟</Emoji> and Design Engineer{' '}
-          <Emoji label="Software developer">👨🏽‍💻</Emoji>. He is passionate about helping people build
-          an accessible web faster. Sage is the author of Chakra UI, a React UI library for building
-          accessible experiences.
+          {siteConfig.nickname} is a Github Star <Emoji label="Github star">🌟</Emoji> and Design
+          Engineer <Emoji label="Software developer">👨🏽‍💻</Emoji>. He is passionate about helping
+          people build an accessible web faster. Sage is the author of Chakra UI, a React UI library
+          for building accessible experiences.
         </Text>
       </Box>
     </Flex>
