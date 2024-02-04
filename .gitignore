@@ -1,0 +1,20 @@
+*.log
+.DS_Store
+.next
+node_modules
+public/sitemap.xml
+public/feed.xml
+.vercel
+.env
+
+# Contentlayer
+.contentlayer
+.env*.local
+
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
