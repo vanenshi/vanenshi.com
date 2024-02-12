@@ -15,7 +15,7 @@ export default function AuthorProfile() {
         />
       </Circle>
       <Box>
-        <Heading size="md">{`Written by Segun Adebayo (Sage)`}</Heading>
+        <Heading size="md">{`Written by ${siteConfig.name} (${siteConfig.nickname})`}</Heading>
         <Text mt="4" lineHeight="taller">
           {siteConfig.nickname} is a Github Star <Emoji label="Github star">🌟</Emoji> and Design
           Engineer <Emoji label="Software developer">👨🏽‍💻</Emoji>. He is passionate about helping

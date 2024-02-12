@@ -1,4 +1,5 @@
 import { NextRouter } from 'next/router';
+import { siteConfig } from 'site.config';
 
 export function addQuery(router: NextRouter, key: string, value: string | string[]) {
   const { pathname, query } = router;
@@ -17,9 +18,7 @@ export function removeQuery(router: NextRouter, key: string) {
 }
 
 export function getBaseUrl() {
-  return process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3001'
-    : 'https://adebayosegun.com';
+  return process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : siteConfig.siteUrl;
 }
 
 export function getAbsoluteURL(path: string) {

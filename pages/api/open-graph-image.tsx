@@ -4,6 +4,7 @@ import { getAbsoluteURL } from 'lib/router-utils';
 import theme from 'lib/theme';
 import { NextApiRequest, NextApiResponse } from 'next';
 import satori from 'satori';
+import { siteConfig } from 'site.config';
 
 const style = (style: React.CSSProperties) => style;
 
@@ -24,14 +25,22 @@ const styles = {
     position: 'relative',
     padding: '72px',
     color: theme.colors.gray['200'],
+    width: 1200,
+    height: 640,
+    justifyContent: 'space-between',
+  }),
+  topContainer: style({
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
   }),
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { title, date, readingTime, tags } = req.query;
+
   const computedTags = isString(tags) ? tags.split(',') : [];
   const hasTags = computedTags.length > 0;
-  const isLong = title?.length > 35;
 
   const inter = await fetch('https://api.fontsource.org/v1/fonts/inter/latin-600-normal.ttf').then(
     (res) => res.arrayBuffer(),
@@ -39,32 +48,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const svg = await satori(
     <div style={styles.container}>
-      <div style={stack()}>
-        {date && readingTime && (
-          <p style={{ fontSize: theme.fontSizes['2xl'], fontWeight: 'bold' }}>
-            {date} — {readingTime}
-          </p>
-        )}
-      </div>
+      <div style={styles.topContainer}>
+        <div style={stack()}>
+          {date && readingTime && (
+            <p style={{ fontSize: theme.fontSizes['2xl'], fontWeight: 'bold' }}>
+              {date} — {readingTime}
+            </p>
+          )}
+        </div>
 
-      <div style={stack({ gap: '32px', marginTop: '32px' })}>
-        <h1
-          style={{
-            color: theme.colors.brown[600],
-            fontSize: hasTags ? '80px' : '90px',
-            minHeight: '160px',
-            maxWidth: isLong ? '100%' : '640px',
-          }}
-        >
-          {title}
-        </h1>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          {computedTags.map((tag) => (
-            <div key={tag} style={{ opacity: 0.8, display: 'flex', fontSize: '20px' }}>
-              <span style={{ color: theme.colors.brown[600] }}>#</span>
-              {tag}
-            </div>
-          ))}
+        <div style={stack({ gap: '12px' })}>
+          <h1
+            style={{
+              color: theme.colors.brown[600],
+              fontSize: hasTags ? '80px' : '90px',
+              lineHeight: hasTags ? '112px' : '126px',
+
+              minHeight: hasTags ? '112px' : '126px',
+              maxHeight: hasTags ? '224px' : '252px',
+
+              overflow: 'hidden',
+              wordWrap: 'break-word',
+            }}
+          >
+            {title}
+          </h1>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+            {computedTags.map((tag) => (
+              <div key={tag} style={{ opacity: 0.8, display: 'flex', fontSize: '20px' }}>
+                <span style={{ color: theme.colors.brown[600] }}>#</span>
+                {tag}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -91,14 +108,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }}
         >
           <img
-            alt="Segun Adebayo"
+            alt={`${siteConfig.name} (${siteConfig.nickname})`}
             src={getAbsoluteURL('/static/images/vanenshi-headshot.jpeg')}
             width={50}
             height={50}
             style={{ objectFit: 'contain', borderRadius: '50%' }}
           />
         </div>
-        <p style={{ fontSize: '20px' }}>Written by Segun Adebayo</p>
+        <p style={{ fontSize: '20px' }}>Written by {siteConfig.name}</p>
       </div>
 
       <div
@@ -106,7 +123,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           color: 'black',
           position: 'absolute',
           bottom: '0px',
-          left: '860px',
+          right: '0',
           borderTopLeftRadius: '20px',
           fontWeight: 'semibold',
           fontSize: '24px',
@@ -114,12 +131,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           padding: '8px 16px',
         }}
       >
-        https://adebayosegun.com
+        {siteConfig.siteUrl}
       </div>
     </div>,
     {
       width: 1200,
-      height: 630,
+      height: 640,
       fonts: [
         {
           name: 'Inter',

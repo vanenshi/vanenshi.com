@@ -1,6 +1,7 @@
 import { writeFileSync } from 'fs';
 import { globby } from 'globby';
 import prettier from 'prettier';
+import * as baseConfig from 'base-config';
 
 async function generate() {
   const prettierConfig = await prettier.resolveConfig('./.prettierrc.js');
@@ -27,7 +28,7 @@ async function generate() {
 
             return `
               <url>
-                  <loc>${`https://adebayosegun.com${route}`}</loc>
+                  <loc>${`${baseConfig.siteUrl}${route}`}</loc>
               </url>
             `;
           })

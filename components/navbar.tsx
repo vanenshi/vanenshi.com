@@ -29,6 +29,7 @@ import {
   SnippetIcon,
   TalksIcon,
 } from './nav-icons';
+import { siteConfig } from 'site.config';
 
 type NavItemProps = {
   data: NavItemData;
@@ -115,7 +116,7 @@ function Headshot() {
         <VisuallyHidden>Home</VisuallyHidden>
         <Image
           priority
-          alt="Segun Adebayo"
+          alt={`${siteConfig.name} (${siteConfig.nickname})`}
           src="/static/images/vanenshi-headshot.jpeg"
           width={32}
           height={32}

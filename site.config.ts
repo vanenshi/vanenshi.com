@@ -1,3 +1,5 @@
+import * as baseConfig from './base-config';
+
 export const tags = [
   'finance',
   'hiring',
@@ -19,21 +21,15 @@ export const tags = [
   'ci',
 ];
 
-const me = {
-  name: 'Amir Hossein Shekari',
-  nickname: 'Vanenshi',
-};
-
 const shared = {
-  ...me,
+  ...baseConfig,
   repo: 'https://github.com/vanenshi/vanenshi.com',
   editUrl: 'https://github.com/vanenshi/vanenshi.com/edit/main/data/',
-  website: 'https://vanenshi.com',
-  title: `${me.name} (aka ${me.nickname}) - Software Developer`,
+  title: `${baseConfig.name} (aka ${baseConfig.nickname}) - Software Developer`,
   description:
     'UI Engineer passionate about design systems, state machines, accessibility, DX and Rust.',
-  image: 'https://adebayosegun.com/static/images/banner.png',
-};
+  image: `${baseConfig.siteUrl}/static/images/banner.png`,
+} as const;
 
 export const siteConfig = {
   name: shared.name,
@@ -43,7 +39,7 @@ export const siteConfig = {
   title: shared.title,
   titleTemplate: `%s - ${shared.name}`,
   description: shared.description,
-  siteUrl: shared.website,
+  siteUrl: shared.siteUrl,
   profiles: {
     github: 'https://github.com/vanenshi',
     twitter: 'https://twitter.com/vanenshi',
@@ -62,17 +58,17 @@ export const siteConfig = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: shared.website,
+    url: shared.siteUrl,
     title: shared.title,
     site_name: shared.name,
     description: shared.description,
     images: [
       {
-        url: 'https://adebayosegun.com/static/images/banner.png',
+        url: `${shared.siteUrl}/static/images/banner.png`,
         width: 1200,
         height: 630,
         alt: shared.title,
       },
     ],
   },
-};
+} as const;

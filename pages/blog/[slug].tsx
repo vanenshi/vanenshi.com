@@ -13,6 +13,7 @@ import { getAbsoluteURL } from 'lib/router-utils';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import Image from 'next/image';
+import { siteConfig } from 'site.config';
 
 export default function BlogPage({ blog, ogImageUrl }: { blog: Blog; ogImageUrl: string }) {
   const Component = useMDXComponent(blog.body.code);
@@ -44,13 +45,13 @@ export default function BlogPage({ blog, ogImageUrl }: { blog: Blog; ogImageUrl:
               <HStack spacing="3">
                 <Circle overflow="hidden">
                   <Image
-                    alt="Segun Adebayo"
-                    src="https://vercel.com/api/www/avatar/6ad338204b00eabaea90981779d3835976b53833?s=64"
+                    alt={`${siteConfig.name} (${siteConfig.nickname})`}
+                    src="/static/images/vanenshi-headshot.jpeg"
                     width={32}
                     height={32}
                   />
                 </Circle>
-                <Text fontWeight="medium">Segun Adebayo</Text>
+                <Text fontWeight="medium">{siteConfig.name}</Text>
               </HStack>
 
               <HStack color="brown.600">

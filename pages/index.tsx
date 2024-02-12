@@ -66,9 +66,8 @@ function MainHeading(props: HeadingProps) {
 export default function HomePage() {
   return (
     <Container>
-      {/* Segun Adebayo - ui engineer & product designer  */}
       <Flex direction="column" paddingY="24">
-        <MainHeading>Segun Adebayo</MainHeading>
+        <MainHeading>{siteConfig.name}</MainHeading>
         <Text
           color="brown.600"
           display="block"
