@@ -121,7 +121,7 @@ export default function HomePage() {
           >
             <Image
               alt="Segun adebayo"
-              src="/static/images/segun-adebayo-headshot.jpg"
+              src="/static/images/vanenshi-headshot.jpeg"
               fill
               style={{ objectFit: 'cover' }}
             />

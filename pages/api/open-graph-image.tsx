@@ -92,7 +92,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         >
           <img
             alt="Segun Adebayo"
-            src={getAbsoluteURL('/static/images/segun-adebayo-headshot.jpg')}
+            src={getAbsoluteURL('/static/images/vanenshi-headshot.jpeg')}
             width={50}
             height={50}
             style={{ objectFit: 'contain', borderRadius: '50%' }}

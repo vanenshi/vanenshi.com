@@ -9,7 +9,7 @@ export default function AuthorProfile() {
       <Circle size="80px" overflow="hidden">
         <Image
           alt={siteConfig.name}
-          src="/static/images/segun-adebayo-headshot.jpg"
+          src="/static/images/vanenshi-headshot.jpeg"
           width={80}
           height={80}
         />

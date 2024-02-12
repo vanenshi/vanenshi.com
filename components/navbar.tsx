@@ -116,7 +116,7 @@ function Headshot() {
         <Image
           priority
           alt="Segun Adebayo"
-          src="/static/images/segun-adebayo-headshot.jpg"
+          src="/static/images/vanenshi-headshot.jpeg"
           width={32}
           height={32}
           style={{ objectFit: 'cover' }}
