@@ -20,16 +20,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ElementType, ReactNode, useEffect } from 'react';
-import {
-  BlogIcon,
-  CloseIcon,
-  CoachingIcon,
-  HamburgerMenuIcon,
-  ProjectIcon,
-  SnippetIcon,
-  TalksIcon,
-} from './nav-icons';
 import { siteConfig } from 'site.config';
+import { BlogIcon, CloseIcon, HamburgerMenuIcon, ProjectIcon, SnippetIcon } from './nav-icons';
 
 type NavItemProps = {
   data: NavItemData;
@@ -66,16 +58,10 @@ interface NavItemData {
 }
 
 const items: NavItemData[] = [
-  { label: 'Talks', href: '/talks', icon: TalksIcon },
+  // { label: 'Talks', href: '/talks', icon: TalksIcon },
   { label: 'Blog', href: '/blog', icon: BlogIcon },
   { label: 'Projects', href: '/projects', icon: ProjectIcon },
   { label: 'Snippets', href: '/snippets', icon: SnippetIcon },
-  {
-    label: 'Coaching',
-    href: 'https://calendly.com/chakra-ui/technical-consulting-60m',
-    icon: CoachingIcon,
-    primary: true,
-  },
 ];
 
 function DesktopNavItemGroup(props: StackProps) {

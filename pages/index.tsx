@@ -191,7 +191,7 @@ export default function HomePage() {
       </Box>
 
       {/* Featured Talks */}
-      <Box as="section" py="vGutter" position="relative">
+      {/* <Box as="section" py="vGutter" position="relative">
         <Heading size="3xl" letterSpacing="tight" position="relative">
           Featured Talks
         </Heading>
@@ -206,7 +206,7 @@ export default function HomePage() {
         <Link href="/talks">
           <ViewMore as="div">View all Talks</ViewMore>
         </Link>
-      </Box>
+      </Box> */}
 
       {/* Tools & Softwares */}
       <Box as="section" py="vGutter">

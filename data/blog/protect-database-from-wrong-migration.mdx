@@ -1,0 +1,56 @@
+---
+title: Protect Production Database from Wrong Migrations
+description: How I Saved My Production Database with One Simple Console Message
+publishedAt: 2023-04-25
+image: /static/images/data-center.jpg
+tags: ['dotnet', 'database']
+featured: true
+---
+
+As a .NET developer, I had a close call when I applied a migration to my production database without changing the database connection string. I was mortified when I realized my mistake, but I quickly got to work finding a solution to prevent it from happening again.
+
+That's when I came up with the idea to add a console message that displays the migration details before applying it. This simple addition gives me the chance to review the migration details and ensure that I am working with the correct database before making any changes.
+
+With this new safeguard in place, I can breathe easy knowing that my production database is safe from accidental alterations. It just goes to show that sometimes the simplest solutions can be the most effective.
+
+```csharp
+public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+{
+    public ApplicationDbContext CreateDbContext(string[] args)
+    {
+        // ... Some code to generate dbContextBuilder
+        var context = new ApplicationDbContext(dbContextBuilder.Options);
+
+        // This is where magic happens
+        var pendingMigrations = context.Database.GetPendingMigrations();
+        Console.WriteLine("*********************************************\n");
+
+        Console.WriteLine("This command is going to apply migrations with following details");
+
+        Console.Write("ConnectionString: ");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(connectionString);
+        Console.ResetColor();
+
+        Console.Write("Migrations:\n\t");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(string.Join("\n\t", value: pendingMigrations.ToArray()));
+        Console.ResetColor();
+        Console.WriteLine();
+        Console.WriteLine("*********************************************");
+
+        Console.WriteLine("Do You confirm? (Y/N)");
+        var userInput = (Console.ReadLine());
+
+        if (userInput is "Y" or "y")
+            return context;
+
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("Aborted!");
+        Environment.Exit(1);
+        return null;
+    }
+}
+```
+
+- More info about the [`ApplicationDbContextFactory`](https://learn.microsoft.com/en-us/ef/core/cli/dbcontext-creation?tabs=dotnet-core-cli)

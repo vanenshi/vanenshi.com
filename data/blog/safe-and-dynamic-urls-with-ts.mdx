@@ -1,0 +1,107 @@
+---
+title: Building Safe and Dynamic URLs with TypeScript
+description: How TypeScript can be used to create a utility function for constructing URLs with type-safety, reducing errors and improving code maintainability.
+publishedAt: 2023-07-13
+image: /static/images/www.jpeg
+tags: ['typescript']
+featured: false
+---
+
+When developing applications, one of the common tasks is constructing URLs, especially when they contain dynamic parts, like IDs. Ensuring the correctness of these URLs can be tedious, leading to potential runtime errors if not done right. This is where TypeScript can lend a hand.
+
+## The Need for urlConverter
+Using string-based routes can be error-prone. Miss a single character or forget to replace a dynamic segment, and the whole URL can break. By using TypeScript, we can create a utility that helps in generating these URLs while ensuring their correctness.
+
+## Building the urlConverter Step by Step
+
+### 1. Organizing URLs
+One of the first steps is to have all URLs organized in one place. Enums in TypeScript provide an excellent way to do this:
+
+```typescript
+export enum UserUrls {
+  getUserUrl = "/users/[userId]",
+  getMyUserURL = "/users/me",
+  // other URLs can go here...
+}
+```
+
+### 2. Extracting Dynamic Parameters
+For URLs with dynamic parts, we need a way to recognize and replace them. A custom TypeScript type can help identify these parts:
+
+```typescript
+
+type IsParameter<Part> = Part extends `[${infer ParamName}]`
+  ? ParamName
+  : never;
+type FilteredParts<Path> = Path extends `${infer PartA}/${infer PartB}`
+  ? IsParameter<PartA> | FilteredParts<PartB>
+  : IsParameter<Path>;
+/**
+ * A very special type that parse a template string to it's object
+ * source: https://lihautan.com/extract-parameters-type-from-string-literal-types-with-typescript/
+ * type ParamObject = Params<'/purchase/[shopId]/[itemId]'>;
+ * type ParamObject = {
+ *      shopId: string;
+ *      itemId: string;
+ *    }
+ */
+export type Params<Path> = {
+  [Key in FilteredParts<Path>]: string | number;
+};
+```
+
+This type works to find any segment enclosed within [].
+
+### 3. Confirming the Presence of Parameters
+To ensure that if a URL requires parameters, they're provided, we can use another type:
+
+```typescript
+type HasParams<Path> = Path extends `${string}[${string}]${string}`
+  ? true
+  : false;
+```
+
+This will check if a route needs parameters.
+
+### 4. Creating the urlConverter Function
+With all the above in place, we can now create our utility:
+
+```typescript
+type AllEnums = UserUrls;
+
+export const urlConverter = <Route extends AllEnums>(
+  routeKey: Route,
+  ...paramsArr: HasParams<typeof routeKey> extends true ? [Params<Route>] : []
+) => {
+  let route = routeKey as string;
+
+  if (!route) {
+    throw Error("Invalid route key");
+  }
+
+  const params = paramsArr[0];
+  if (params) {
+    Object.keys(params).forEach((paramKey) => {
+      const value = params[paramKey]?.toString();
+      route = route.replace(`[${paramKey}]`, value);
+    });
+  }
+  return route;
+};
+```
+
+## Usage Example
+Generating a reset URL with a given token can be done easily:
+
+```typescript
+
+const getUserUrl = urlConverter(UserUrls.getUserUrl, { userId: 12 });
+console.log(getUserUrl); // Outputs: `/users/12`
+
+```
+
+## Conclusion
+The `urlConverter` utility ensures that constructing dynamic URLs is straightforward and less error-prone. Leveraging TypeScript allows for catching potential mistakes at compile-time rather than runtime, resulting in more robust applications.
+
+---
+I hope this approach helps in your development journey, ensuring cleaner and safer URL generation with TypeScript.
