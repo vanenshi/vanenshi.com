@@ -25,7 +25,7 @@ export default function FeaturedBlogCard(props: BlogCardProps) {
       gap="12"
       data-group
       padding={{ base: '6', md: '10' }}
-      bg="gray.800"
+      bg="neutral.800"
       rounded="xl"
       shadow="highlight"
       flexDirection={{ base: 'column', md: 'row' }}
@@ -56,7 +56,7 @@ export default function FeaturedBlogCard(props: BlogCardProps) {
           fontSize="sm"
         >
           <Text fontWeight="semibold">🌟 Featured article</Text>
-          <HStack spacing="2" color="brown.600">
+          <HStack spacing="2" color="cyan.600">
             <Box as="time" dateTime={date.iso}>
               {date.pretty}
             </Box>

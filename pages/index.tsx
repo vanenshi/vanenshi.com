@@ -69,7 +69,7 @@ export default function HomePage() {
       <Flex direction="column" paddingY="24">
         <MainHeading>{siteConfig.name}</MainHeading>
         <Text
-          color="brown.600"
+          color="cyan.600"
           display="block"
           fontSize="5xl"
           fontFamily="heading"
@@ -132,7 +132,7 @@ export default function HomePage() {
             letterSpacing="tight"
           >
             I design{' '}
-            <Box as="span" color="brown.600">
+            <Box as="span" color="cyan.600">
               component systems
             </Box>
           </Heading>
@@ -223,7 +223,7 @@ export default function HomePage() {
         {/* ToolList */}
         <Wrap spacing="10">
           {tools.map((tool) => (
-            <WrapItem fontFamily="heading" fontSize="3xl" color="brown.600" key={tool}>
+            <WrapItem fontFamily="heading" fontSize="3xl" color="cyan.600" key={tool}>
               {tool}
             </WrapItem>
           ))}

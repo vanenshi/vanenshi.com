@@ -24,9 +24,9 @@ const styles = {
     flexDirection: 'column',
     position: 'relative',
     padding: '72px',
-    color: theme.colors.gray['200'],
+    color: theme.colors.cyan[200],
     width: 1200,
-    height: 640,
+    height: 630,
     justifyContent: 'space-between',
   }),
   topContainer: style({
@@ -60,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         <div style={stack({ gap: '12px' })}>
           <h1
             style={{
-              color: theme.colors.brown[600],
+              color: theme.colors.cyan[600],
               fontSize: hasTags ? '80px' : '90px',
               lineHeight: hasTags ? '112px' : '126px',
 
@@ -77,7 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
             {computedTags.map((tag) => (
               <div key={tag} style={{ opacity: 0.8, display: 'flex', fontSize: '20px' }}>
-                <span style={{ color: theme.colors.brown[600] }}>#</span>
+                <span style={{ color: theme.colors.cyan[600] }}>#</span>
                 {tag}
               </div>
             ))}
@@ -103,7 +103,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             height: '70px',
             borderRadius: '50%',
             border: '4px solid',
-            borderColor: theme.colors.brown[600],
+            borderColor: theme.colors.cyan[600],
             overflow: 'hidden',
           }}
         >
@@ -127,7 +127,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           borderTopLeftRadius: '20px',
           fontWeight: 'semibold',
           fontSize: '24px',
-          background: theme.colors.brown[600],
+          background: theme.colors.cyan[600],
           padding: '8px 16px',
         }}
       >
@@ -136,7 +136,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     </div>,
     {
       width: 1200,
-      height: 640,
+      height: 630,
       fonts: [
         {
           name: 'Inter',
@@ -149,7 +149,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   );
 
   const resvg = new Resvg(svg, {
-    background: theme.colors.gray['900'],
+    background: theme.colors.neutral[900],
     fitTo: {
       mode: 'width',
       value: 2400,

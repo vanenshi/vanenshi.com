@@ -10,7 +10,7 @@ type TestimonialCardProps = {
 export default function TestimonialCard(props: TestimonialCardProps) {
   const { data: testimonial } = props;
   return (
-    <Box bg="gray.800" rounded="2xl" position="relative" padding="6" shadow="highlight">
+    <Box bg="neutral.800" rounded="2xl" position="relative" padding="6" shadow="highlight">
       <LinkedInBadge />
 
       <Box>
@@ -46,10 +46,10 @@ export default function TestimonialCard(props: TestimonialCardProps) {
 function LinkedInBadge() {
   return (
     <>
-      <Box position="absolute" right="6" display={{ base: 'none', md: 'block' }} color="brown.600">
+      <Box position="absolute" right="6" display={{ base: 'none', md: 'block' }} color="cyan.600">
         <FullLinkedInLogo />
       </Box>
-      <Box position="absolute" right="6" display={{ md: 'none' }} color="brown.600">
+      <Box position="absolute" right="6" display={{ md: 'none' }} color="cyan.600">
         <LinkedInIcon />
       </Box>
     </>

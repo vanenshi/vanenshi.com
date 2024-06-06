@@ -54,7 +54,7 @@ export default function BlogPage({ blog, ogImageUrl }: { blog: Blog; ogImageUrl:
                 <Text fontWeight="medium">{siteConfig.name}</Text>
               </HStack>
 
-              <HStack color="brown.600">
+              <HStack color="cyan.600">
                 <chakra.span>{blog.readingTime.text}</chakra.span>
                 <span aria-hidden>•</span>
                 <time dateTime={date.iso}>{date.pretty}</time>
@@ -75,7 +75,7 @@ export default function BlogPage({ blog, ogImageUrl }: { blog: Blog; ogImageUrl:
 
           <Box
             sx={{
-              color: 'gray.300',
+              color: 'neutral.300',
               lineHeight: 'taller',
               'p + p': {
                 marginY: '1.25em',

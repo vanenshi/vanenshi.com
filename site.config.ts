@@ -28,7 +28,7 @@ const shared = {
   title: `${baseConfig.name} (aka ${baseConfig.nickname}) - Software Developer`,
   description:
     'UI Engineer passionate about design systems, state machines, accessibility, DX and Rust.',
-  image: `${baseConfig.siteUrl}/static/images/banner.png`,
+  image: `/static/images/banner.png`,
 } as const;
 
 export const siteConfig = {
@@ -64,7 +64,7 @@ export const siteConfig = {
     description: shared.description,
     images: [
       {
-        url: `${shared.siteUrl}/static/images/banner.png`,
+        url: `/static/images/banner.png`,
         width: 1200,
         height: 630,
         alt: shared.title,

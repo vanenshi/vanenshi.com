@@ -1,17 +1,18 @@
 import { extendTheme } from '@chakra-ui/react';
 
 const colors = {
-  gray: {
-    50: '#fafaf9',
-    100: '#f5f5f4',
-    200: '#e7e5e4',
-    300: '#d6d3d1',
-    400: '#a8a29e',
-    500: '#78716c',
-    600: '#57534e',
-    700: '#44403c',
-    800: '#292524',
-    900: '#1c1917',
+  neutral: {
+    50: '#fafafa',
+    100: '#f5f5f5',
+    200: '#e5e5e5',
+    300: '#d4d4d4',
+    400: '#a3a3a3',
+    500: '#737373',
+    600: '#525252',
+    700: '#404040',
+    800: '#262626',
+    900: '#171717',
+    950: '#0a0a0a',
   },
   brown: {
     50: 'hsl(30, 50.0%, 97.6%)',
@@ -24,6 +25,19 @@ const colors = {
     700: 'hsl(28, 34.0%, 51.0%)',
     800: 'hsl(27, 31.8%, 47.6%)',
     900: 'hsl(25, 30.0%, 41.0%)',
+  },
+  cyan: {
+    50: '#ecfeff',
+    100: '#cffafe',
+    200: '#a5f3fc',
+    300: '#67e8f9',
+    400: '#22d3ee',
+    500: '#06b6d4',
+    600: '#0891b2',
+    700: '#0e7490',
+    800: '#155e75',
+    900: '#164e63',
+    950: '#083344',
   },
 };
 
@@ -45,15 +59,15 @@ const theme = {
   styles: {
     global: {
       'html, body': {
-        bg: 'gray.900',
-        color: 'gray.300',
+        bg: 'neutral.900',
+        color: 'neutral.300',
         minH: '100vh',
         overflowX: 'hidden',
         colorScheme: 'dark',
       },
       '*:focus, *[data-focus]': {
         outline: '2px solid',
-        outlineColor: 'brown.400',
+        outlineColor: 'cyan.400',
         outlineOffset: '3px',
       },
       'h2,h3,h4': {
@@ -72,7 +86,7 @@ const theme = {
         marginX: '3',
         '&:before': {
           content: `"#"`,
-          color: 'brown.600',
+          color: 'cyan.600',
         },
         '&:focus': {
           opacity: 1,

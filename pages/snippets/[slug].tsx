@@ -38,7 +38,7 @@ export default function Page({ snippet }: { snippet: Snippet }) {
 
           <Box
             sx={{
-              color: 'gray.500',
+              color: 'neutral.500',
               lineHeight: '1.75',
               'p + p': {
                 marginTop: '2',

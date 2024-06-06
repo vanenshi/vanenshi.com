@@ -41,10 +41,10 @@ function NavItem(props: NavItemProps) {
       paddingY={large ? '5' : '2.5'}
       rounded="lg"
       aria-current={active ? 'page' : undefined}
-      _hover={{ color: 'brown.600' }}
-      _activeLink={{ bg: 'gray.800', shadow: 'highlight' }}
+      _hover={{ color: 'cyan.600' }}
+      _activeLink={{ bg: 'neutral.800', shadow: 'highlight' }}
     >
-      <Icon as={data.icon} color="brown.600" fontSize="lg" />
+      <Icon as={data.icon} color="cyan.600" fontSize="lg" />
       <Text fontFamily="heading">{children}</Text>
     </HStack>
   );
@@ -97,7 +97,7 @@ function MobileNavItemGroup(props: StackProps) {
 
 function Headshot() {
   return (
-    <Circle size="10" rounded="full" borderWidth="2px" borderColor="brown.600">
+    <Circle size="10" rounded="full" borderWidth="2px" borderColor="cyan.600">
       <Circle rounded="full" overflow="hidden" size="8">
         <VisuallyHidden>Home</VisuallyHidden>
         <Image
@@ -142,7 +142,7 @@ function MobileNavMenu() {
       </Center>
       <Drawer isOpen={menu.isOpen} onClose={menu.onClose} placement="bottom">
         <DrawerOverlay />
-        <DrawerContent id="nav-menu" bg="gray.800" padding="6">
+        <DrawerContent id="nav-menu" bg="neutral.800" padding="6">
           <MobileNavItemGroup />
         </DrawerContent>
       </Drawer>

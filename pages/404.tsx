@@ -7,7 +7,7 @@ export default function Page() {
       <Box minHeight="60vh">
         <Box maxWidth="4xl" marginX="auto" paddingTop="12" paddingBottom="8rem" textAlign="center">
           <Box pt="10">
-            <Heading as="h1" fontSize="10em" color="brown.500">
+            <Heading as="h1" fontSize="10em" color="cyan.500">
               404
             </Heading>
             <p>Oh no! This page doesn't exist.</p>

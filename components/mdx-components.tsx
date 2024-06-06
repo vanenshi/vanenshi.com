@@ -11,8 +11,8 @@ const ChakraLink = React.forwardRef<HTMLAnchorElement, any>(function ChakraLink(
       fontWeight="semibold"
       textDecor="underline"
       textUnderlineOffset="6px"
-      textDecorationColor="brown.700"
-      _hover={{ bg: 'gray.700' }}
+      textDecorationColor="cyan.700"
+      _hover={{ bg: 'neutral.700' }}
       {...props}
     />
   );
@@ -36,7 +36,7 @@ const MDXComponents: Record<string, React.FC<any>> = {
     return <chakra.ul paddingStart="4" marginY="5" {...props} />;
   },
   li(props) {
-    return <chakra.li marginY="2" sx={{ '&::marker': { color: 'brown.600' } }} {...props} />;
+    return <chakra.li marginY="2" sx={{ '&::marker': { color: 'cyan.600' } }} {...props} />;
   },
   h2(props) {
     return (
@@ -72,8 +72,8 @@ const MDXComponents: Record<string, React.FC<any>> = {
         paddingX="6"
         paddingY="4"
         marginX="-6"
-        bg="gray.800"
-        sx={{ borderLeft: '4px solid', borderColor: 'brown.600' }}
+        bg="neutral.800"
+        sx={{ borderLeft: '4px solid', borderColor: 'cyan.600' }}
         {...props}
       />
     );
@@ -91,7 +91,7 @@ const MDXComponents: Record<string, React.FC<any>> = {
             />
           </AspectRatio>
           {caption && (
-            <chakra.figcaption fontSize="small" textAlign="center" color="gray.400">
+            <chakra.figcaption fontSize="small" textAlign="center" color="neutral.400">
               {alt}
             </chakra.figcaption>
           )}
@@ -102,7 +102,7 @@ const MDXComponents: Record<string, React.FC<any>> = {
       <Stack as="figure" marginY={marginY}>
         <Image alt={alt} className="img" style={{ objectFit: fit }} {...rest} />
         {caption && (
-          <chakra.figcaption fontSize="small" textAlign="center" color="gray.400">
+          <chakra.figcaption fontSize="small" textAlign="center" color="neutral.400">
             {alt}
           </chakra.figcaption>
         )}
@@ -114,7 +114,7 @@ const MDXComponents: Record<string, React.FC<any>> = {
   },
   code(props) {
     if (typeof props.children === 'string') {
-      return <chakra.code color="brown.600" rounded="sm">{`\`${props.children}\``}</chakra.code>;
+      return <chakra.code color="cyan.600" rounded="sm">{`\`${props.children}\``}</chakra.code>;
     }
     return <code {...props} />;
   },
@@ -130,18 +130,18 @@ const MDXComponents: Record<string, React.FC<any>> = {
           borderCollapse: 'collapse',
           thead: {
             borderBottomWidth: '1px',
-            borderBottomColor: 'gray.700',
+            borderBottomColor: 'neutral.700',
             th: {
               textAlign: 'start',
               padding: '2',
               verticalAlign: 'bottom',
-              color: 'gray.200',
+              color: 'neutral.200',
             },
           },
           tbody: {
             tr: {
               borderBottomWidth: '1px',
-              borderBottomColor: 'gray.800',
+              borderBottomColor: 'neutral.800',
             },
             td: {
               padding: '2',

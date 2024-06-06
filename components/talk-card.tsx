@@ -22,7 +22,7 @@ function HoverEffect() {
     <Box
       zIndex={0}
       as="span"
-      bg="gray.800"
+      bg="neutral.800"
       position="absolute"
       borderRadius={{ md: '2xl' }}
       insetX="-1.5rem"
@@ -67,13 +67,13 @@ export default function TalkCard(props: TalkCardProps) {
 
         <HStack spacing="10">
           <Text casing="uppercase" fontWeight="bold" fontSize="sm" letterSpacing="wider">
-            <Box as="span" color="brown.600" marginRight="2">
+            <Box as="span" color="cyan.600" marginRight="2">
               Host:
             </Box>
             {talk.host}
           </Text>
           <DarkMode>
-            <Badge color="brown.600" colorScheme="orange">
+            <Badge color="cyan.600" colorScheme="orange">
               {talk.type}
             </Badge>
           </DarkMode>

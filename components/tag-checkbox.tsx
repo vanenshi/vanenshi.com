@@ -24,14 +24,14 @@ export default function TagCheckbox(props: TagCheckboxProps) {
         data-value={value}
         px="4"
         py="2"
-        bg="gray.800"
+        bg="neutral.800"
         rounded="lg"
         fontWeight="bold"
         fontFamily="heading"
         cursor="pointer"
         shadow="highlight"
-        _hover={{ color: 'brown.600' }}
-        _checked={{ bg: 'brown.600', color: 'black' }}
+        _hover={{ color: 'cyan.600' }}
+        _checked={{ bg: 'cyan.600', color: 'black' }}
         _disabled={{ opacity: 0.4, pointerEvents: 'none', cursor: 'unset' }}
       >
         <span {...getLabelProps()}>{children}</span>
