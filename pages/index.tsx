@@ -76,7 +76,7 @@ export default function HomePage() {
           fontWeight="bold"
           lineHeight="1.2"
         >
-          UI engineer &amp; product designer
+          Software Engineer
         </Text>
 
         {/* I'm passionate about... */}
@@ -86,19 +86,17 @@ export default function HomePage() {
           maxWidth="40rem"
           fontSize={{ base: 'lg', md: '2xl' }}
         >
-          I'm passionate about <Emoji label="design system">🎨</Emoji> design systems,{' '}
-          <Emoji label="accessibility">♿️</Emoji> accessibility,{' '}
-          <Emoji label="state machine">⚙️</Emoji> state machines, and{' '}
-          <Emoji label="love">😍 </Emoji> user experience
+          I'm passionate about back-end and front-end development, customizing development
+          environments, and learning new technologies and tools.
         </Text>
 
         {/* Github star and Chakra brag */}
-        <Box marginTop={{ base: '8', md: '14' }} width="full">
+        {/* <Box marginTop={{ base: '8', md: '14' }} width="full">
           <Flex direction={{ base: 'column', md: 'row' }} gap={{ base: '5', md: '10' }}>
             <AchievementItem icon={GithubStarIcon}>Github Star</AchievementItem>
             <AchievementItem icon={ChakraLogo}>Creator, Chakra UI</AchievementItem>
           </Flex>
-        </Box>
+        </Box> */}
       </Flex>
 
       {/* I design component systems... */}
@@ -131,17 +129,18 @@ export default function HomePage() {
             fontSize={{ base: '3rem', md: '5rem', lg: '6.25rem' }}
             letterSpacing="tight"
           >
-            I design{' '}
+            I build{' '}
             <Box as="span" color="cyan.600">
-              component systems
+              Software
             </Box>
           </Heading>
         </Box>
 
         <Box maxWidth={{ lg: '27.5rem' }} marginTop="4">
           <Text fontSize={{ base: 'lg', md: '2xl' }}>
-            An engineer with a strong design background, specializing in design systems,
-            accessibility and interface design for digital products
+            A software engineer with over 5 years of experience specializing in back-end and
+            front-end development. Passionate about customizing development environments and
+            proficient in Linux and OSX.
           </Text>
 
           {/* Profile links */}
