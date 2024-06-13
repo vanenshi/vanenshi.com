@@ -1,0 +1,56 @@
+---
+title: Fulfill with Time Limit
+description: Function to race a promise against a timeout, rejecting if the timeout is exceeded.
+logo: /static/logos/typescript.png
+categories: ['typescript', 'async', 'promise']
+---
+
+```ts
+export async function fulfillWithTimeLimit(
+  timeLimit: number,
+  promise: Promise<unknown>,
+): Promise<unknown> {
+  let timeoutPid: NodeJS.Timeout;
+
+  const timeout = new Promise<unknown>(
+    (resolve, reject) =>
+      (timeoutPid = setTimeout(
+        () => reject(new Error(`Timed out after ${timeLimit} ms.`)),
+        timeLimit,
+      )),
+  );
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timeoutPid) {
+      clearTimeout(timeoutPid);
+    }
+  });
+```
+
+## Example
+
+```ts
+  async function fetchData(): Promise<string> {
+    // Simulate an API call that takes some time
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('Data fetched successfully');
+      }, 2000); // This promise resolves after 2 seconds
+    });
+  }
+
+  try {
+    const result = await fulfillWithTimeLimit(1000, fetchData());
+    console.log(result);
+  } catch (error) {
+    console.error(error.message); // Expected to log: "Timed out after 1000 ms."
+  }
+
+  try {
+    const result = await fulfillWithTimeLimit(3000, fetchData());
+    console.log(result); // Expected to log: "Data fetched successfully"
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+```

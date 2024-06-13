@@ -1,0 +1,75 @@
+---
+title: Use Query Refresh Control
+description: Custom hook to integrate React Query's fetching status with React Native's RefreshControl for pull-to-refresh functionality.
+logo: /static/logos/react.png
+categories: ['react-query', 'react-native', 'hooks']
+---
+
+```ts
+export const useQueryRefreshControl = ({
+  isFetching,
+  refetch,
+}: UseInfiniteQueryResult | UseQueryResult): JSX.Element => {
+  const [isFetchingInitiatedByUser, setFetchingInitiatedByUser] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    refetch();
+    setFetchingInitiatedByUser(true);
+  }, [refetch]);
+
+  useEffect(() => {
+    if (!isFetching) setFetchingInitiatedByUser(false);
+  }, [isFetching]);
+
+  return useMemo(
+    () => (
+      <RefreshControl refreshing={isFetching && isFetchingInitiatedByUser} onRefresh={onRefresh} />
+    ),
+    [isFetching, isFetchingInitiatedByUser, onRefresh],
+  );
+};
+```
+
+## Example
+
+```ts
+// A custom hook to fetch todos and integrate with RefreshControl
+const useGetTodos = (
+  options?: UseQueryOptions<Todo[]>,
+): { refreshControl: JSX.Element } & UseQueryResult<Todo[]> => {
+  const query = useQuery({
+    queryKey: ['todos'],
+    queryFn: getTodos,
+    ...options,
+  });
+
+  const refreshControl = useQueryRefreshControl(query);
+
+  return {
+    ...query,
+    refreshControl,
+  };
+};
+
+// Usage in a React Native component
+const TodoList = () => {
+  const { data, isLoading, isError, refreshControl } = useGetTodos();
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (isError) {
+    return <Text>Error loading todos.</Text>;
+  }
+
+  return (
+    <FlatList
+      data={data}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <Text>{item.title}</Text>}
+      refreshControl={refreshControl}
+    />
+  );
+};
+```
