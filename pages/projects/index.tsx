@@ -16,7 +16,7 @@ export default function ProjectPage() {
             Projects
           </Heading>
           <Stack fontSize="lg" maxW="60ch" spacing="4">
-            <Text>
+            {/* <Text>
               My primary focus these days is{' '}
               <MDXComponents.a href="https://chakra-ui.com/" target="_blank" rel="noopener">
                 Chakra UI{' '}
@@ -27,7 +27,7 @@ export default function ProjectPage() {
             <Text>
               I'm passionate about building <b>component systems</b> that help teams ship products
               faster by bridging the gap between design and code.
-            </Text>
+            </Text> */}
             <Text>Here are some projects I've worked on that I think are worth mentioning.</Text>
           </Stack>
         </Box>

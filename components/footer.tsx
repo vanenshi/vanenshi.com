@@ -12,7 +12,7 @@ export default function Footer() {
             {siteConfig.name}
           </Heading>
           <Text fontSize="lg">
-            Passionate UI engineer looking to bridge the gap between design and code
+            Tech-savvy Software Engineer driven by a love for problem-solving and innovation.
           </Text>
         </Box>
 

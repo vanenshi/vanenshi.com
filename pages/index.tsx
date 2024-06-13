@@ -86,8 +86,8 @@ export default function HomePage() {
           maxWidth="40rem"
           fontSize={{ base: 'lg', md: '2xl' }}
         >
-          I'm passionate about back-end and front-end development, customizing development
-          environments, and learning new technologies and tools.
+          I'm passionate about 🛠️ full stack development, 🔍 solving complex problems, ⚙️ building
+          scalable solutions, and 🌟 delivering high-quality digital products.
         </Text>
 
         {/* Github star and Chakra brag */}
@@ -131,16 +131,15 @@ export default function HomePage() {
           >
             I build{' '}
             <Box as="span" color="cyan.600">
-              Software
+              software solutions
             </Box>
           </Heading>
         </Box>
 
         <Box maxWidth={{ lg: '27.5rem' }} marginTop="4">
           <Text fontSize={{ base: 'lg', md: '2xl' }}>
-            A software engineer with over 5 years of experience specializing in back-end and
-            front-end development. Passionate about customizing development environments and
-            proficient in Linux and OSX.
+            Experienced Full Stack Developer specializing in building comprehensive digital
+            solutions, with expertise in mobile, web, and backend development.
           </Text>
 
           {/* Profile links */}

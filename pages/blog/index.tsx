@@ -25,8 +25,8 @@ export default function Page() {
             Blog
           </Heading>
           <Text fontSize="lg" maxW="560px">
-            Here's a list of articles, thoughts and ideas around topics like design systems,
-            accessibility, state machines and lots more.
+            Here's a list of articles, thoughts and ideas around topics like dotnet, typescript,
+            react and lots more.
           </Text>
         </Box>
 
