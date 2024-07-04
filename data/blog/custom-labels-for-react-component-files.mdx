@@ -1,0 +1,66 @@
+---
+title: Boosting VS Code Productivity - Custom Labels for React Component Files
+description: Discover how VSCode's custom labels feature can dramatically improve readability and navigation in large React projects by customizing the display of `index.ts` files.
+publishedAt: 2024-07-04
+image: /static/images/custom-labels.png
+tags: ['vscode', 'react', 'productivity']
+featured: true
+---
+
+Ever felt like you're drowning in a sea of `index.ts` files? Trust me, I've been there. Working on a massive React project, I found myself constantly lost in a maze of identical-looking files. But then I stumbled upon a game-changer: VS Code's custom labels feature. Let me tell you how it transformed my coding life.
+
+## The Problem with `index.ts` Overload
+
+
+
+Picture this: You're deep in the zone, juggling multiple components, when suddenly you need to find that one specific `index.ts` file. You open the search bar, and bam! A flood of indistinguishable results. Frustrating, right? That's exactly where I was until I discovered the magic of custom labels.
+
+![Image](/static/images/custom-labels-messy-index.png)
+
+
+## Enter Custom Labels
+
+So, what's the deal with these custom labels? In a nutshell, they're VS Code's way of letting you personalize how file names appear in your editor tabs and search bar. For us React devs drowning in `index.ts` files, it's like throwing us a lifeline.
+
+## Setting Up Custom Labels Step by Step
+
+### 1. Enable Custom Labels
+
+First, you'll need to enable custom labels in your VS Code settings. Just add this line to your settings.json:
+
+```json
+"workbench.editor.customLabels.enabled": true
+```
+
+### 2. Define Patterns for `index.ts` Files
+
+Now, here's where the real magic happens. Add this bit to tell VS Code to replace those generic `index.ts` names with their parent directory names:
+
+```json
+"workbench.editor.customLabels.patterns": {
+  "**/index.{ts,js,tsx,jsx}": "${dirname}"
+}
+```
+
+### 3. Customize for Specific Directories
+
+If you're like me and have a specific folder where all your components live, you can target just that directory:
+
+```json
+"workbench.editor.customLabels.patterns": {
+  "components/*/index.{ts,js,tsx,jsx}": "${dirname}"
+}
+```
+
+![Image](/static/images/custom-labels-applied-index.png)
+
+
+## The Benefits of Custom Labels
+
+1. **Increased Readability**: Instead of a sea of `index.tsx` tabs, you'll see "Button", "Header", and so on. It's like your editor suddenly learned to speak your language!
+
+2. **Efficient Searching**: Searching for specific components became a breeze.
+
+3. **Reduced Mental Load**: No more second-guessing which `index.ts` I was looking at.
+
+So, fellow coders, if you're tired of playing "Where's Waldo?" with your `index.ts` files, give custom labels a shot. It's a small change that packs a big punch in your daily coding life. Trust me, your future self will thank you!
