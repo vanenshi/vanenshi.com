@@ -27,6 +27,9 @@ export const allFeaturedProjects = allProjects.filter((project) => project.featu
 
 export const allFeaturedTalks = allTalks.filter((talk) => talk.featured);
 
+console.log(allTestimonials);
+
+
 export const allFeaturedTestimonials = allTestimonials.filter(
   (testimonial) => testimonial.featured,
 );

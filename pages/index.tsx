@@ -13,26 +13,18 @@ import {
   Wrap,
   WrapItem,
 } from '@chakra-ui/react';
-import ChakraLogo from 'components/chakra-logo';
 import Container from 'components/container';
-import Emoji from 'components/emoji';
-import GithubStarIcon from 'components/github-star';
 import LinkItem from 'components/link-item';
 import ProjectCard from 'components/project-card';
 import { EmailIcon, FileIcon, LinkedInIcon, TwitterIcon } from 'components/social-icons';
-import TalkCard from 'components/talk-card';
 import TestimonialCard from 'components/testimonial-card';
-import ViewMore from 'components/view-more';
 import chunk from 'lib/chunk';
 import {
   allFeaturedProjects,
-  allFeaturedTalks,
-  allFeaturedTestimonials,
+  allFeaturedTestimonials
 } from 'lib/contentlayer-utils';
-import sortByPublishedDate from 'lib/sort';
 import tools from 'lib/tools';
 import Image from 'next/image';
-import Link from 'next/link';
 import { siteConfig } from 'site.config';
 
 function AchievementItem({ icon, children }) {
@@ -64,6 +56,8 @@ function MainHeading(props: HeadingProps) {
 }
 
 export default function HomePage() {
+  console.log(chunk(allFeaturedTestimonials, 2));
+
   return (
     <Container>
       <Flex direction="column" paddingY="24">
