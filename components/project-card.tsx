@@ -48,6 +48,7 @@ export default function ProjectCard(props: ProjectCardProps) {
       <ProjectImageCard
         src={project.image}
         alt={project.title}
+        rtl={project.rtl}
         objectPosition={project.objectPosition}
       />
     </Flex>
@@ -57,11 +58,12 @@ export default function ProjectCard(props: ProjectCardProps) {
 type ProjectImageCardProps = {
   src?: string;
   alt: string;
+  rtl?: boolean;
   objectPosition?: string;
 };
 
 function ProjectImageCard(props: ProjectImageCardProps) {
-  const { src, alt, objectPosition = '-16%' } = props;
+  const { src, alt, rtl, objectPosition = '-16%' } = props;
   return (
     <Box
       flex={{ md: '1' }}
@@ -74,7 +76,8 @@ function ProjectImageCard(props: ProjectImageCardProps) {
     >
       <Box
         position="absolute"
-        left="10"
+        left={rtl ? undefined : 10}
+        right={rtl ? 10 : undefined}
         top="10"
         width="56.25rem"
         height="31.25rem"
