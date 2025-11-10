@@ -2,6 +2,7 @@ import { AspectRatio, Stack, chakra } from '@chakra-ui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { GistEmbed } from './gist-embed';
 
 const ChakraLink = React.forwardRef<HTMLAnchorElement, any>(function ChakraLink(props, ref) {
   return (
@@ -29,6 +30,7 @@ const CustomLink = (props) => {
 
 const MDXComponents: Record<string, React.FC<any>> = {
   a: CustomLink,
+  GistEmbed,
   ul(props) {
     return <chakra.ul paddingStart="4" marginY="5" {...props} />;
   },
