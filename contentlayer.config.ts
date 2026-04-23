@@ -112,6 +112,8 @@ const Project = defineDocumentType(() => ({
     description: { type: 'string' },
     github: { type: 'string' },
     website: { type: 'string' },
+    ios: { type: 'string' },
+    android: { type: 'string' },
     metadata: { type: 'json' },
     image: { type: 'string' },
     objectPosition: { type: 'string' },

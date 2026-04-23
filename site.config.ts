@@ -44,6 +44,7 @@ export const siteConfig = {
     github: 'https://github.com/vanenshi',
     twitter: 'https://twitter.com/vanenshi',
     linkedin: 'https://linkedin.com/in/vanenshi',
+    resume: '/static/docs/amir_shekari_resume.pdf',
     email: 'mailto:vanenshi@gmail.com',
   },
   repo: {

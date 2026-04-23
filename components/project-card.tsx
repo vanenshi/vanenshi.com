@@ -4,7 +4,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks';
 import Image from 'next/image';
 import { DescriptionList } from './description-item';
 import LinkItem from './link-item';
-import { GithubIcon, WebsiteIcon } from './social-icons';
+import { AndroidIcon, AppleIcon, GithubIcon, WebsiteIcon } from './social-icons';
 
 type ProjectCardProps = {
   data: Project;
@@ -21,7 +21,7 @@ export default function ProjectCard(props: ProjectCardProps) {
           <Heading as="h3" color="cyan.600" letterSpacing="tight">
             {project.title}
           </Heading>
-          {(project.github || project.website) && (
+          {(project.github || project.website || project.ios || project.android) && (
             <HStack spacing="12">
               {project.github && (
                 <LinkItem icon={GithubIcon} href={project.github} iconColor="whiteAlpha.600">
@@ -33,6 +33,16 @@ export default function ProjectCard(props: ProjectCardProps) {
                   Website
                 </LinkItem>
               )}
+              {project.android && (
+                <LinkItem icon={AndroidIcon} href={project.android} iconColor="green.300">
+                  Android
+                </LinkItem>
+              )}
+              {project.ios && (
+                <LinkItem icon={AppleIcon} href={project.ios} iconColor="whiteAlpha.700">
+                  iOS
+                </LinkItem>
+              )}
             </HStack>
           )}
           <Box fontSize="lg">
@@ -41,7 +51,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         </Stack>
 
         <Box marginTop="12">
-          <DescriptionList data={project.metadata} />
+          {!!project.metadata && <DescriptionList data={project.metadata} />}
         </Box>
       </Box>
 

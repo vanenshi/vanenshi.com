@@ -147,7 +147,7 @@ export default function HomePage() {
             <LinkItem icon={EmailIcon} href={siteConfig.profiles.email}>
               Email
             </LinkItem>
-            <LinkItem icon={FileIcon} href={siteConfig.profiles.linkedin}>
+            <LinkItem icon={FileIcon} href={siteConfig.profiles.resume}>
               Resume
             </LinkItem>
           </SimpleGrid>
