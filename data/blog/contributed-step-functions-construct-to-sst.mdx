@@ -61,7 +61,7 @@ I chose the latter. I designed the component using a **linked-node architecture*
 
 Once I had a working version, I didn't want to keep it in a silo. I forked the SST repository, integrated my new `StepFunctions` component, and used it to successfully fix the Glim inbox sync. It handled 100,000+ emails without breaking a sweat.
 
-Seeing it work in production, I opened a [Feature Request](https://github.com/anomalyco/sst/issues/4660) and a [Pull Request](https://github.com/anomalyco/sst/pull/5691).
+Seeing it work in production, I opened a [Pull Request](https://github.com/anomalyco/sst/pull/5691).
 
 After several rounds of refinement, the code was merged. Today, that construct—born out of a desperate need to sync 100,000 emails without hitting a Google rate limit—is available for everyone in the SST ecosystem to use.
 
