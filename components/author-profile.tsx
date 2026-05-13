@@ -17,9 +17,21 @@ export default function AuthorProfile() {
       <Box>
         <Heading size="md">{`Written by ${siteConfig.name} (${siteConfig.nickname})`}</Heading>
         <Text mt="4" lineHeight="taller">
-          {siteConfig.nickname} is a Software developer<Emoji label="Software developer">👨🏽‍💻</Emoji>. He is passionate about helping
-          startups to build new ideas. {siteConfig.nickname} is the builder of <Link color="cyan.600" href='https://roombadi.com/'>Roombadi</Link>, 
-          <Link color="cyan.600" href='https://kisshe.com/'> Kisshe</Link> and <Link color="cyan.600" href='http://mozayedegar.ir/'>Mozayedegar</Link>.
+          {siteConfig.nickname} is a Software developer<Emoji label="Software developer">👨🏽‍💻</Emoji>.
+          He is passionate about helping startups to build new ideas. {siteConfig.nickname} is the
+          builder of{' '}
+          <Link color="cyan.600" href="https://www.synapsai.ai/">
+            Synaps AI
+          </Link>
+          {', '}
+          <Link color="cyan.600" href="https://sitelifes.com/">
+            Sitelifes
+          </Link>{' '}
+          and{' '}
+          <Link color="cyan.600" href="http://mozayedegar.ir/">
+            Mozayedegar
+          </Link>
+          .
         </Text>
       </Box>
     </Flex>
