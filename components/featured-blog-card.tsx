@@ -41,9 +41,8 @@ export default function FeaturedBlogCard(props: BlogCardProps) {
         <Image
           src={image}
           alt={title}
-          width={320}
-          height={210}
           priority
+          fill
           style={{ objectFit: 'cover' }}
         />
       </Box>

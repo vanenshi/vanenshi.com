@@ -1,15 +1,15 @@
 ---
-title: Scaling the Inbox - How I Contributed the Step Functions Construct to SST
-description: How I Contributed the Step Functions Construct to SST
+title: Why I Ditched SQS for Step Functions (and Ended Up Contributing to SST)
+description: Why I Ditched SQS for Step Functions (and Ended Up Contributing to SST)
 publishedAt: 2026-05-11
-image: /static/images/step-functions-construct.webp
+image: /static/images/sst-step-functions-component.webp
 tags: ['sst', 'step-functions', 'aws']
 featured: true
 ---
 
 Every developer knows the "happy path"—that glorious moment when your code works perfectly on a small sample size. But when the "happy path" meets the reality of 100,000+ emails and strict API rate limits, things tend to break.
 
-This is the story of how a bottleneck in my AI startup, Glim, led me to build and contribute the Step Functions construct to the SST (Serverless Stack) ecosystem.
+This is the story of how a bottleneck in my AI startup, Glim, led me to build and contribute the Step Functions component to the SST (Serverless Stack) ecosystem.
 
 ## The Problem: The Gmail "Wall"
 
@@ -47,13 +47,13 @@ I decided to move to a **Scatter-Gather** pattern using AWS Step Functions. This
 
 1. **Fetch IDs:** Fetch 500 IDs at a time (even fetching the IDs can hit limits once you pass 40k emails).
 2. **Strict Flow Control:** Process the batch, respect the rate limit, then move to the next 500.
-3. **Software-Level Backoff:** Implement an exponential wait step within the flow so that retries didn't stack on top of each other at the API gateway level.
+3. **Software-Level Backoff:** Implement an exponential wait step within the flow so that retries don't stack on top of each other at the API gateway level.
 
 ## The Hurdle: SST Didn't Speak Step Functions
 
-At the time, Glim was built entirely on **SST (Serverless Stack)**. I loved the developer experience of SST, but there was a major missing piece: **it didn't have a built-in construct for Step Functions.**
+At the time, Glim was built entirely on **SST (Serverless Stack)**. I loved the developer experience of SST, but there was a major missing piece: **it didn't have a built-in component for Step Functions.**
 
-I had two choices: manually write raw Pulumi code (which would feel out of place in my clean SST codebase) or build a native SST construct myself.
+I had two choices: manually write raw Pulumi code (which would feel out of place in my clean SST codebase) or build a native SST component myself.
 
 I chose the latter. I designed the component using a **linked-node architecture**. I visualized the state machine as a circular tree where each node connects the steps of the SF. I wrote the logic to compile this tree into the exact JSON format required for Pulumi (the backend of SST) and pushed it to AWS.
 
@@ -63,7 +63,7 @@ Once I had a working version, I didn't want to keep it in a silo. I forked the S
 
 Seeing it work in production, I opened a [Pull Request](https://github.com/anomalyco/sst/pull/5691).
 
-After several rounds of refinement, the code was merged. Today, that construct—born out of a desperate need to sync 100,000 emails without hitting a Google rate limit—is available for everyone in the SST ecosystem to use.
+After several rounds of refinement, the code was merged. Today, that component, born out of a desperate need to sync 100,000 emails without hitting a Google rate limit, is available for everyone in the SST ecosystem to use.
 
 ## Lessons Learned
 

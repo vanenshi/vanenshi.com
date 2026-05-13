@@ -62,15 +62,20 @@ export default function BlogPage({ blog, ogImageUrl }: { blog: Blog; ogImageUrl:
             </Flex>
           </Box>
 
-          <Box
-            position="relative"
-            height="400px"
-            rounded="lg"
-            overflow="hidden"
-            marginTop="10"
-            marginBottom="16"
-          >
-            <Image src={blog.image} alt={blog.title} fill style={{ objectFit: 'cover' }} priority />
+          <Box position="relative" rounded="lg" overflow="hidden" marginTop="10" marginBottom="6">
+            <Image
+              src={blog.image}
+              alt={blog.title}
+              width={0}
+              height={0}
+              sizes="100vw"
+              priority
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+              }}
+            />
           </Box>
 
           <Box
