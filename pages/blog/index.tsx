@@ -54,7 +54,7 @@ export default function Page() {
           {search.hasFilter || search.hasQuery ? null : (
             <FeaturedBlogCard data={allFeaturedBlogs[0]} />
           )}
-          <SimpleGrid columns={{ base: 1, md: 3 }} mt="4rem" spacing="10">
+          <SimpleGrid columns={{ base: 1, md: 2 }} mt="4rem" spacing="10">
             {search.results.map((blog) => (
               <BlogCard key={blog.title} data={blog} />
             ))}

@@ -1,0 +1,86 @@
+---
+title: "Spec Anchor Development: The Methodology That Replaced Our AI Chaos"
+description: "Spec Anchor Development: The Methodology That Replaced Our AI Chaos"
+publishedAt: 2026-05-20
+image: /static/images/spec-anchor-development.webp
+tags: ['spec-driven-development', 'ai', 'productivity']
+featured: true
+---
+
+This is how we went from a team where everyone used AI their own way to one with a consistent, reviewable, onboardable codebase. Three methodologies, six months, one that actually stuck.
+
+## The problem with "everyone uses AI their way"
+
+When AI coding tools started getting good, our team did what most teams do: let people figure it out themselves. Seniors, mids, two fresh graduates, everyone had a workflow, everyone was shipping, and nobody was producing the same kind of code.
+
+The cracks showed up in review. Some PRs ignored project conventions entirely. Others were technically correct but bloated, AI-optimized for performance problems we didn't have. Commit histories were noise. Junior developers, who needed the most structure, had the least context to judge whether what the AI gave them was actually good.
+
+This isn't really an AI problem. It's what happens when you hand a power tool to a team with no shared standards and assume it'll work out.
+
+---
+
+## Step one: Rules
+
+The first fix was the simplest. Back then Cursor was the dominant tool (this was before agent modes and Codex and Claude Code) and it had a rules system. I spent a day writing a real ruleset: naming conventions, commit format, complexity limits, anti-patterns we'd already seen, with examples of what good and bad looked like.
+
+On the target repo, it worked immediately. PRs got more consistent. Reviews got faster. One technique worth knowing: ask the AI to compare its own output against the rules and flag deviations. Works well as a lightweight quality gate.
+
+Worth noting: this isn't a Cursor thing. Every serious AI coding tool today has an equivalent. Claude Code has its `CLAUDE.md`, Windsurf has rules, Copilot has instructions, Gemini Code Assist has context files. The mechanism varies, the principle doesn't. Write shared rules, put them in the project, and every developer on every tool benefits from them.
+
+The ceiling became obvious pretty fast though. Rules govern style and structure. They don't help when a developer asks the AI to build an entire feature in one prompt, which leads to bloated context, degraded coherence, and output that loses the thread halfway through.
+
+---
+
+## Step two: SpecKit
+
+SpecKit appeared around that time. The premise: break work into discrete specs before writing code, so the AI handles smaller, well-defined units instead of open-ended feature requests. I tested it personally for a week, got good results, and rolled it into our AI-assisted repos.
+
+Then the overhead became the problem.
+
+SpecKit's step count was more than we needed. Every feature added a new spec to an ever-growing list. After a few months it felt like a glorified plan mode. The list existed, nobody referenced it after the feature shipped, and it wasn't connected to any product-level decision. New engineers couldn't use it to understand why something was built a certain way.
+
+We were generating documentation. We weren't capturing knowledge.
+
+---
+
+## Why Spec Anchor Development
+
+After more research I found Spec Anchor Development, a variant of SDD (Specification-Driven Development) where the spec isn't a step in a checklist. It's a persistent artifact, written before the build, used during it, kept after as a reference.
+
+That's the actual difference from SpecKit. In SpecKit, specs accumulate. In Spec Anchor Development, each spec is tied to a specific feature or decision, lean enough to actually be read later.
+
+What a spec anchor does in practice:
+
+- The developer (not the AI) defines what's being built before the AI touches anything
+- The AI gets a bounded scope: no guessing, no scope creep
+- When someone asks "why was this built this way," there's a document that answers it
+- When a decision affects the broader system, it feeds into an ADR
+
+That last one changed things more than I expected. Once we configured the system to generate or update ADRs alongside spec anchors, we stopped losing institutional knowledge. New engineers could read the decision trail. Senior engineers stopped re-explaining the same architectural context in every code review.
+
+---
+
+## OpenSpec
+
+OpenSpec is the main tool for Spec Anchor Development. What makes it work for a mixed-seniority team is that it doesn't try to do too much. The spec template has what you need and stops there. Fast enough that developers don't resent writing specs, structured enough that the output is consistent across the team regardless of who wrote it.
+
+We ran the full setup (OpenSpec with ADR generation) for three months. A few things that actually changed:
+
+- Code quality became consistent across seniority levels, not just in senior-owned repos
+- The mandatory spec step forced developers to slow down before coding. That sounds like friction. It caught scope problems that would have been code problems. Net positive.
+- Product and engineering could both read the spec layer, no translation required
+- Onboarding got easier. New engineers read specs and ADRs before reading code, and came in with actual context
+
+---
+
+## What to take from this if you're setting up something similar
+
+**Rules first, but don't expect them to scale.** Whatever tool your team uses, it almost certainly has a rules or instructions system. Use it. It's the fastest win available and worth doing regardless of what else you adopt. It won't solve the feature-scoping problem; it's not supposed to.
+
+**Test before you roll out.** Run a personal evaluation for a week before putting a methodology in front of your team. The team tax for a bad methodology is real and slow to undo. SpecKit wasn't wrong for every team; it was wrong for ours.
+
+**A spec is not a ticket.** A well-written spec anchor defines what the AI is building and what it isn't. That constraint is what stops the "huge prompt, degraded output" failure most teams hit on larger features.
+
+**The planning habit matters more than the AI workflow.** The best thing this system did was change how developers thought before they opened their editor. Spending time in the spec phase forced actual thinking about scope, edge cases, and intent. The AI just made the habit systematic.
+
+**Don't skip ADRs.** If specs don't connect to a record of why decisions were made, you'll reconstruct that context from scratch in every retro and every onboarding. It's the part teams skip first and regret most.
