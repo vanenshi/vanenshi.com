@@ -33,7 +33,7 @@ export default function FeaturedBlogCard(props: BlogCardProps) {
       <Box
         width="full"
         maxWidth="420px"
-        height="210px"
+        sx={{ aspectRatio: '16 / 10' }}
         rounded="lg"
         overflow="hidden"
         position="relative"

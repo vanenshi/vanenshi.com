@@ -1,0 +1,268 @@
+---
+title: Beta and Production Builds in Expo - Fully Local, No EAS Required
+description: Turn one Expo project into two fully separate apps - beta and production - with different bundle ids, icons, names, and backends, using only prebuild and the Expo CLI. No EAS.
+image: /static/images/expo-build-variants-banner.png
+publishedAt: 2026-07-04
+tags: ["expo", "react-native", "mobile", "builds", "cng"]
+featured: false
+---
+
+Ever installed a beta build on your phone, and it silently replaced your production app? Then you opened it, and it was logged into your production account, talking to your production API? Me too. That's the day I decided my beta and production builds needed to be two completely separate apps.
+
+The usual answer is "just use EAS build profiles." And EAS is fine, but you don't need it for this. Everything EAS does with build variants is powered by something that already lives in your project: [Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/). The `android` and `ios` folders in an Expo project are generated output, the same way a `build` folder is. Your app config is the source of truth, and [`npx expo prebuild`](https://docs.expo.dev/more/expo-cli/#prebuild) regenerates the native projects from it. That means we can generate a *different* native project per environment, on our own machine, with nothing but the Expo CLI.
+
+Let's build that setup step by step. I'm using Expo SDK 57 here, but nothing in this post is SDK-specific — the same approach works at least back to SDK 50. The app is called MyApp; swap in your own name. Everything below is a real, working project you can clone and run: [vanenshi/expo-build-variants](https://github.com/vanenshi/expo-build-variants).
+
+![One phone home screen with both apps installed side by side: blue "MyApp" icon next to orange "MyApp Beta" icon](/static/images/expo-build-variants.png)
+
+## Step 1: delete your native folders (mentally, at least)
+
+If you have `android/` and `ios/` checked into git and you've been editing them by hand, this approach won't work, because prebuild will overwrite your edits. So the first decision is: the app config owns the native projects.
+
+```gitignore
+# .gitignore
+/android
+/ios
+```
+
+New projects created with `create-expo-app` already do this — the Expo docs [state that the `android` and `ios` directories are added to `.gitignore` automatically](https://docs.expo.dev/workflow/continuous-native-generation/). If yours is an older project, add the two lines yourself, and move any manual native edits into [config plugins](https://docs.expo.dev/config-plugins/introduction/) first.
+
+Why does this matter for environments? Because once the native projects are generated, we can generate them differently per environment. One command gives you a beta app, another gives you the production app, and they never share a single native file.
+
+## Step 2: make the config dynamic
+
+Rename `app.json` to `app.config.ts` (Expo picks up [dynamic config](https://docs.expo.dev/workflow/configuration/#dynamic-configuration) automatically) and drive it with a single variable:
+
+```ts
+// app.config.ts
+import { ExpoConfig } from "expo/config";
+
+// default to beta: the safe variant is the one you get by accident
+const APP_VARIANT = process.env.APP_VARIANT ?? "beta";
+const IS_BETA = APP_VARIANT === "beta";
+
+const config: ExpoConfig = {
+  name: "MyApp",
+  slug: "myapp",
+  version: "1.0.0",
+  ios: {
+    bundleIdentifier: IS_BETA ? "com.example.myapp.beta" : "com.example.myapp",
+  },
+  android: {
+    package: IS_BETA ? "com.example.myapp.beta" : "com.example.myapp",
+  },
+};
+
+export default config;
+```
+
+That's the whole trick. `APP_VARIANT=prod npx expo prebuild` gives you the production native project; run it without the variable and you get beta. Defaulting to beta is deliberate — if anyone (you, a script, CI) forgets the variable, the accident produces a harmless beta build, never a production one. This is, incidentally, exactly the mechanism Expo's own [multiple app variants tutorial](https://docs.expo.dev/tutorial/eas/multiple-app-variants/) uses — they just set `APP_VARIANT` from `eas.json` profiles instead of your shell.
+
+Note that `APP_VARIANT` only exists at prebuild time, on your machine. It never ships in the app, and the app never reads it. That's deliberate, and step 5 shows what the app reads instead.
+
+## Step 3: why a separate namespace, not just an env variable
+
+You might be tempted to keep one bundle identifier and switch the API URL with an env variable. Please don't. Let's go over a scenario together.
+
+Say your beta and production builds share the bundle id `com.example.myapp`. On the device, they're the same app. That means they share the keychain, `AsyncStorage`, SQLite files, push tokens, everything. A tester installs the beta over their production install, and the beta happily reads production tokens from the keychain and starts firing requests at your beta backend with a production session. Or the other way around, which is worse.
+
+Now say beta lives at `com.example.myapp.beta`. The OS treats it as a different app. Separate sandbox, separate keychain, separate storage. There is no code path, no forgotten `if`, no misconfigured env file that can leak production data into the beta build, because the operating system itself is the wall between them. An env variable is a promise; a namespace is a guarantee.
+
+There's a second win here, and for your QA team it might be the bigger one: both apps install side by side on the same phone. The Expo docs call this out directly: [each variant needs a unique Android application ID and iOS bundle identifier to enable simultaneous installations on one device](https://docs.expo.dev/tutorial/eas/multiple-app-variants/). A tester can reproduce a bug in production, switch to the beta build, and verify the fix in under a minute, on the same device, with both sessions alive. No uninstalling, no logging back in, no "wait, which build was I on?" With a shared bundle id, every switch between environments destroys the other install and its state; with separate namespaces, comparing beta against production becomes a two-tap operation. Once your QA has worked this way, they will not let you go back.
+
+## Step 4: give each variant its own display name (and icon)
+
+Two apps on one home screen, both called "MyApp" with the same icon? Your testers will file bugs against the wrong build within a week. So we want the beta to say "MyApp Beta" under a visibly different icon.
+
+Here's where most guides tell you to change the `name` field per variant:
+
+```ts
+name: IS_BETA ? "MyApp Beta" : "MyApp",
+```
+
+Don't do that either. Why? Changing `name` changes every name reference in the app. Prebuild derives the native project name from it: the Xcode project name, the scheme, iOS folder names, Android module names. Change it and you've effectively renamed the whole native project, which means a full prebuild and a full native rebuild every time you switch variants. But all we need to change is the display name, the one string under the icon.
+
+The thing we actually want to change is tiny: `CFBundleDisplayName` in `Info.plist` on iOS, and `app_name` in `strings.xml` on Android. That's exactly what the `withDisplayName` plugin from [@vanenshi/expo-plugins](https://github.com/vanenshi/expo-plugins) does, and nothing else.
+
+```bash
+npx expo install @vanenshi/expo-plugins
+```
+
+```ts
+// app.config.ts
+const config: ExpoConfig = {
+  name: "MyApp", // stays stable, native project never gets renamed
+  // ...
+  plugins: [
+    [
+      "@vanenshi/expo-plugins/display-name",
+      { displayName: IS_BETA ? "MyApp Beta" : "MyApp" },
+    ],
+  ],
+};
+```
+
+Now switching variants touches two plist/xml strings instead of the entire project structure. The home screen says "MyApp Beta", and your Xcode project doesn't even notice. You can verify it yourself after a beta prebuild:
+
+```bash
+$ grep app_name android/app/src/main/res/values/strings.xml
+<string name="app_name">MyApp Beta</string>
+
+$ /usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" ios/MyApp/Info.plist
+MyApp Beta
+```
+
+Note the path: it's still `ios/MyApp/`, not `ios/MyAppBeta/`. The project structure stayed put.
+
+The icon works the same way — it's just another config field, so branch it on the variant:
+
+```ts
+icon: IS_BETA ? "./assets/icon-beta.png" : "./assets/icon.png",
+```
+
+One field, both platforms.
+
+In the [example repo](https://github.com/vanenshi/expo-build-variants) the production icon is blue and the beta icon is orange. Nobody taps the wrong app anymore.
+
+## Step 5: select runtime config by application id, not by env
+
+So how does the app itself know which backend to talk to? The reflex answer is `.env` files. That doesn't work well in Expo: [`EXPO_PUBLIC_*` variables get inlined into the JS bundle at build time](https://docs.expo.dev/guides/environment-variables/) — every `process.env.EXPO_PUBLIC_X` reference is replaced with its value when the bundle is created — and there's no real separation between environments. Each lifecycle (dev server, prebuild, the build itself) reads its own environment, so it's easy to bundle beta code with whatever env happened to be loaded at that moment. One stale shell variable and your beta build ships with the production URL baked in.
+
+We already gave each variant a unique, OS-enforced identity in step 3: the application id. The app can ask the OS who it is, and pick its config from that. The same namespace that isolates the storage now selects the config, and the two can never disagree.
+
+Install [`expo-application`](https://docs.expo.dev/versions/v57.0.0/sdk/application/) and make a config module keyed by application id:
+
+```bash
+npx expo install expo-application
+```
+
+```ts
+// src/config/index.ts
+import * as Application from "expo-application";
+
+type AppConfig = {
+  apiUrl: string;
+  environment: "beta" | "production";
+};
+
+const configs: Record<string, AppConfig> = {
+  "com.example.myapp": {
+    apiUrl: "https://jsonplaceholder.typicode.com",
+    environment: "production",
+  },
+  "com.example.myapp.beta": {
+    apiUrl: "https://dummyjson.com",
+    environment: "beta",
+  },
+};
+
+const appId = Application.applicationId!;
+const config = configs[appId];
+
+if (!config) {
+  throw new Error(`No config found for application id: ${appId}`);
+}
+
+export default config;
+```
+
+(The example repo uses two public fake-data APIs — [JSONPlaceholder](https://jsonplaceholder.typicode.com) standing in for production, [DummyJSON](https://dummyjson.com) standing in for beta — so you can actually watch the two variants hit two different backends. In your app these would be `api.myapp.com` and `api.beta.myapp.com`.)
+
+```ts
+// anywhere in the app
+import config from "@/config";
+
+fetch(`${config.apiUrl}/todos/1`);
+```
+
+Walk through what just happened. There is no env variable to load, forget, or leak. The binary identifies itself through `Application.applicationId`, which per the docs is [the application ID on Android and the bundle ID on iOS](https://docs.expo.dev/versions/v57.0.0/sdk/application/#applicationapplicationid) — the identity the OS installed the app under, unfakeable at runtime. If the app is `com.example.myapp.beta`, it gets the beta config, period. Build it with the wrong env loaded, build it on a colleague's machine, build it in CI at 3am: the mapping can't drift, because it isn't an input to the build at all. And the `throw` at the bottom means an unknown id fails loudly on launch instead of quietly talking to the wrong backend.
+
+Two footnotes on that same mechanism:
+
+- Inside Expo Go, `Application.applicationId` returns Expo Go's own id (and on web it's `null`) — which makes sense once you remember what it is: the identity of the *installed binary*. So this setup assumes [development builds](https://docs.expo.dev/develop/development-builds/introduction/), which you're already using if you run `expo run:ios` / `expo run:android`.
+- This file ships inside the JS bundle, so it's for config, not secrets. Anyone can extract these URLs from the binary. Real secrets stay on the server.
+
+Since the app now knows its environment at runtime, gating beta-only features becomes a one-liner. The example app has a Debug tab and a debug screen that only exist in the beta build:
+
+```tsx
+{config.environment === "beta" && (
+  <NativeTabs.Trigger name="debug">
+    <NativeTabs.Trigger.Label>Debug</NativeTabs.Trigger.Label>
+  </NativeTabs.Trigger>
+)}
+```
+
+No feature flag service, no env check — the OS-assigned identity drives it. And unlike an env-var check, it can't be true in the wrong binary.
+
+![Side by side: production variant showing application id com.example.myapp and jsonplaceholder API with a single Home tab, next to the beta variant showing com.example.myapp.beta, the dummyjson API, an extra Debug tab and an "Open debug tools" button](/static/images/expo-build-variants-side-by-side.png)
+
+## Step 6: build it, locally
+
+Now the payoff. No EAS queue, no cloud, just your machine (with the usual [local build prerequisites](https://docs.expo.dev/guides/local-app-development/): Xcode for iOS, Android Studio + JDK for Android):
+
+```bash
+# beta
+APP_VARIANT=beta npx expo prebuild --clean
+npx expo run:ios --configuration Release
+npx expo run:android --variant release
+
+# production
+APP_VARIANT=prod npx expo prebuild --clean
+npx expo run:ios --configuration Release
+npx expo run:android --variant release
+```
+
+Notice `APP_VARIANT` only appears on the prebuild line. That's the whole point of step 2: the variable's only job is to decide what native project gets generated. Once `ios/` and `android/` exist, they *are* the beta app (or the production app) — bundle id, icon, name, everything baked in — and `run:ios` / `run:android` just build whatever is there. Setting the variable on the run commands would do nothing.
+
+Wiping the native folders before regenerating matters here: layering a prebuild on top of existing files ["may not produce the same results in some cases"](https://docs.expo.dev/workflow/continuous-native-generation/#clean) — a half-beta, half-production Franken-project is exactly the failure mode we're avoiding. As of SDK 57, `expo prebuild` does a clean regeneration by default, so the `--clean` flag above is redundant — I keep it because it's harmless, it makes the intent explicit, and on older SDKs (where layering was the default) it's still required. Since the folders are gitignored and disposable, wiping them costs you nothing.
+
+For distributable artifacts, prebuild first and then use the native tooling directly. On Android:
+
+```bash
+APP_VARIANT=beta npx expo prebuild --clean
+cd android && ./gradlew assembleRelease
+# apk lands in android/app/build/outputs/apk/release/
+```
+
+On iOS, open `ios/MyApp.xcworkspace` and archive from Xcode, or script it with `xcodebuild archive` if you're wiring this into CI.
+
+Wrap the whole thing in package scripts and you're done:
+
+```json
+{
+  "scripts": {
+    "start": "expo start --dev-client",
+    "prebuild": "cross-env APP_VARIANT=beta expo prebuild --clean",
+    "prebuild:prod": "cross-env APP_VARIANT=prod expo prebuild --clean",
+    "ios": "expo run:ios",
+    "android": "expo run:android"
+  }
+}
+```
+
+Two choices worth explaining. `cross-env` so the variable also works on Windows. And beta is the default — both in the bare `prebuild` script and as the fallback inside `app.config.ts` when `APP_VARIANT` isn't set. On a dev machine the build you crank out twenty times a day is the beta one, so it gets the short name, and production is the one you have to spell out with `prebuild:prod`. Wrong-way-around defaults are how production builds accidentally ship from a dev machine.
+
+And if you do use EAS elsewhere, the same variant setup drives `eas build --local` too — one `eas.json` with a `beta` and a `production` profile, each setting `APP_VARIANT`, and `eas build -e beta -p ios --local` produces the same beta app on your own machine. The example repo ships those scripts as `ios:beta:build` / `ios:prod:build`.
+
+One sanity check that makes the whole thing feel real — run the beta prebuild and look at what came out:
+
+```bash
+$ APP_VARIANT=beta npx expo prebuild --clean
+✔ Finished prebuild
+
+$ grep applicationId android/app/build.gradle
+        applicationId 'com.example.myapp.beta'
+
+$ grep PRODUCT_BUNDLE_IDENTIFIER ios/MyApp.xcodeproj/project.pbxproj | head -1
+        PRODUCT_BUNDLE_IDENTIFIER = "com.example.myapp.beta";
+```
+
+Run it again without `APP_VARIANT` and both flip back to `com.example.myapp`. Two apps, one config file, zero cloud.
+
+## What we ended up with
+
+Two apps that can live on the same phone. The beta cannot read a single byte of production data, because the OS won't let it. Runtime config is selected by the application id the OS installed the app under, so there's no env file that can drift between builds. Beta-only features are gated by that same identity. Switching between variants is one prebuild-time variable, and thanks to `withDisplayName` we get distinct home-screen names without ever renaming the native project. All of it runs on your laptop with the standard Expo CLI.
+
+The complete working example is at [vanenshi/expo-build-variants](https://github.com/vanenshi/expo-build-variants) — clone it, run `npm run prebuild && npm run ios`, then `npm run prebuild:prod && npm run ios` again, and you'll have both variants on one simulator.
+
+If you set this up and something breaks, or you want a third variant like staging (it's just another entry in the config map and another branch in `app.config.ts`), let me know.
