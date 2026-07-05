@@ -45,6 +45,7 @@ const Blog = defineDocumentType(() => ({
     featured: { type: 'boolean' },
     title: { type: 'string', required: true },
     publishedAt: { type: 'string', required: true },
+    updatedAt: { type: 'string' },
     description: { type: 'string', required: true },
     image: { type: 'string', required: true },
     tags: { type: 'list', of: { type: 'string' } },

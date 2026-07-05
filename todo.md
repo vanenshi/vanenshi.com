@@ -1,0 +1,2 @@
+- [ ] Check shiki, possible replace with prism
+- [ ] Upgrade to new nextjs

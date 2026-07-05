@@ -9,8 +9,7 @@
   "scripts": {
     "env:pull": "vercel env pull",
     "create:blog": "plop blog:create",
-    "build": "contentlayer build && next build",
-    "postbuild": "yarn rss && yarn sitemap",
+    "build": "contentlayer build && next build && yarn rss && yarn sitemap",
     "dev": "next dev",
     "dev:local": "vercel dev",
     "start": "next start",
@@ -64,5 +63,7 @@
     "typescript": "^5.0.3",
     "vercel": "^32.1.0"
   },
-  "packageManager": "yarn@4.1.0"
+  "engines": {
+    "node": "20.x"
+  }
 }

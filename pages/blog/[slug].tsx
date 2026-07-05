@@ -25,7 +25,12 @@ export default function BlogPage({ blog, ogImageUrl }: { blog: Blog; ogImageUrl:
         image={ogImageUrl}
         title={blog.title}
         description={blog.description}
-        post={{ date: date.iso, tags: blog.tags }}
+        path={`/blog/${blog.slug}`}
+        post={{
+          date: date.iso,
+          modifiedDate: blog.updatedAt ? formatDate(blog.updatedAt).iso : undefined,
+          tags: blog.tags,
+        }}
       />
       <Box maxWidth="4xl" marginX="auto" paddingTop="12" paddingBottom="8rem">
         <article>
