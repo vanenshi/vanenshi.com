@@ -1,4 +1,4 @@
-import { Snippet } from 'contentlayer/generated';
+import { Snippet } from 'content-collections';
 import { Box, Heading, LinkBox, LinkOverlay, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import NextLink from 'next/link';

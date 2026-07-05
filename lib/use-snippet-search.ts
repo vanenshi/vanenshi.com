@@ -1,4 +1,4 @@
-import { allSnippets } from 'contentlayer/generated';
+import { allSnippets } from 'content-collections';
 import { useMemo } from 'react';
 import { getSnippetCategories } from './contentlayer-utils';
 import search from './match-sorter';

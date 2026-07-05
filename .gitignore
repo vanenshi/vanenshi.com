@@ -9,6 +9,9 @@ public/feed.xml
 
 # Contentlayer
 .contentlayer
+
+# Content Collections
+.content-collections
 .env*.local
 
 # yarn

@@ -4,7 +4,7 @@ import {
   allSnippets,
   allTalks,
   allTestimonials,
-} from 'contentlayer/generated';
+} from 'content-collections';
 
 export function getBlogTags(data = allBlogs) {
   const values = data.flatMap((blog) => blog.tags);
@@ -26,9 +26,6 @@ export const allFeaturedBlogs = allBlogs.filter((blog) => blog.featured);
 export const allFeaturedProjects = allProjects.filter((project) => project.featured);
 
 export const allFeaturedTalks = allTalks.filter((talk) => talk.featured);
-
-console.log(allTestimonials);
-
 
 export const allFeaturedTestimonials = allTestimonials.filter(
   (testimonial) => testimonial.featured,

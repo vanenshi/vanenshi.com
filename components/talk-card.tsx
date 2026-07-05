@@ -1,4 +1,4 @@
-import { Talk } from 'contentlayer/generated';
+import { Talk } from 'content-collections';
 import {
   Badge,
   Box,
@@ -74,7 +74,7 @@ export default function TalkCard(props: TalkCardProps) {
           </Text>
           <DarkMode>
             <Badge color="cyan.600" colorScheme="orange">
-              {talk.type}
+              Talk
             </Badge>
           </DarkMode>
         </HStack>

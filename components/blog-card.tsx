@@ -1,4 +1,4 @@
-import { Blog } from 'contentlayer/generated';
+import { Blog } from 'content-collections';
 import { Box, Heading, HStack, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import formatDate from 'lib/format-date';
 import Image from 'next/image';

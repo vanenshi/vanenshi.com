@@ -1,4 +1,4 @@
-const { withContentlayer } = require('next-contentlayer');
+const { withContentCollections } = require('@content-collections/next');
 
 const httpsDomainPattern = (domain) => {
   return {
@@ -12,8 +12,7 @@ const httpsDomainPattern = (domain) => {
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = withContentlayer({
-  swcMinify: true,
+module.exports = withContentCollections({
   images: {
     remotePatterns: [
       httpsDomainPattern('vanenshi.com'),

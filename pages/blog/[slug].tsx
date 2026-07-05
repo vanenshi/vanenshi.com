@@ -7,16 +7,16 @@ import MDXComponents from 'components/mdx-components';
 import { BlogIcon } from 'components/nav-icons';
 import SEO from 'components/seo';
 import { TwitterIcon } from 'components/social-icons';
-import { Blog, allBlogs } from 'contentlayer/generated';
+import { Blog, allBlogs } from 'content-collections';
 import formatDate from 'lib/format-date';
 import { getAbsoluteURL } from 'lib/router-utils';
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import { useMDXComponent } from 'next-contentlayer/hooks';
+import { useMDXComponent } from '@content-collections/mdx/react';
 import Image from 'next/image';
 import { siteConfig } from 'site.config';
 
 export default function BlogPage({ blog, ogImageUrl }: { blog: Blog; ogImageUrl: string }) {
-  const Component = useMDXComponent(blog.body.code);
+  const Component = useMDXComponent(blog.mdx);
   const date = formatDate(blog.publishedAt);
 
   return (

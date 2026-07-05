@@ -1,6 +1,6 @@
-import { type Project } from 'contentlayer/generated';
+import { type Project } from 'content-collections';
 import { Box, Flex, Heading, HStack, Stack } from '@chakra-ui/react';
-import { useMDXComponent } from 'next-contentlayer/hooks';
+import { useMDXComponent } from '@content-collections/mdx/react';
 import Image from 'next/image';
 import { DescriptionList } from './description-item';
 import LinkItem from './link-item';
@@ -12,7 +12,7 @@ type ProjectCardProps = {
 
 export default function ProjectCard(props: ProjectCardProps) {
   const { data: project } = props;
-  const Component = useMDXComponent(project.body.code);
+  const Component = useMDXComponent(project.mdx);
 
   return (
     <Flex gap="20" direction={{ base: 'column', md: 'row' }}>
