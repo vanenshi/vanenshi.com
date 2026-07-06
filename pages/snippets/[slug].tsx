@@ -1,5 +1,5 @@
-import { allSnippets } from 'contentlayer/generated';
-import { Snippet } from 'contentlayer/generated';
+import { allSnippets } from 'content-collections';
+import { Snippet } from 'content-collections';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import Container from 'components/container';
 import HashTags from 'components/hash-tags';
@@ -9,11 +9,11 @@ import { BlogIcon } from 'components/nav-icons';
 import SEO from 'components/seo';
 import { TwitterIcon } from 'components/social-icons';
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import { useMDXComponent } from 'next-contentlayer/hooks';
+import { useMDXComponent } from '@content-collections/mdx/react';
 import Image from 'next/image';
 
 export default function Page({ snippet }: { snippet: Snippet }) {
-  const Component = useMDXComponent(snippet.body.code);
+  const Component = useMDXComponent(snippet.mdx);
 
   return (
     <Container>

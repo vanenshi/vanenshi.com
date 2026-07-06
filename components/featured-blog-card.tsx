@@ -1,4 +1,4 @@
-import { Blog } from 'contentlayer/generated';
+import { Blog } from 'content-collections';
 import { Box, Flex, Heading, HStack, LinkBox, LinkOverlay, Text } from '@chakra-ui/react';
 import formatDate from 'lib/format-date';
 import Image from 'next/image';
@@ -38,7 +38,14 @@ export default function FeaturedBlogCard(props: BlogCardProps) {
         overflow="hidden"
         position="relative"
       >
-        <Image src={image} alt={title} priority fill style={{ objectFit: 'cover' }} />
+        <Image
+          src={image}
+          alt={title}
+          priority
+          fill
+          sizes="(max-width: 420px) 100vw, 420px"
+          style={{ objectFit: 'cover' }}
+        />
       </Box>
 
       <Box flex="1">

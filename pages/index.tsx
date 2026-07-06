@@ -19,10 +19,7 @@ import ProjectCard from 'components/project-card';
 import { EmailIcon, FileIcon, LinkedInIcon, TwitterIcon } from 'components/social-icons';
 import TestimonialCard from 'components/testimonial-card';
 import chunk from 'lib/chunk';
-import {
-  allFeaturedProjects,
-  allFeaturedTestimonials
-} from 'lib/contentlayer-utils';
+import { allFeaturedProjects, allFeaturedTestimonials } from 'lib/contentlayer-utils';
 import tools from 'lib/tools';
 import Image from 'next/image';
 import { siteConfig } from 'site.config';
@@ -56,8 +53,6 @@ function MainHeading(props: HeadingProps) {
 }
 
 export default function HomePage() {
-  console.log(chunk(allFeaturedTestimonials, 2));
-
   return (
     <Container>
       <Flex direction="column" paddingY="24">
@@ -111,9 +106,10 @@ export default function HomePage() {
             overflow="hidden"
           >
             <Image
-              alt="Segun adebayo"
+              alt={`${siteConfig.name} headshot`}
               src="/static/images/vanenshi-headshot.jpeg"
               fill
+              sizes="100px"
               style={{ objectFit: 'cover' }}
             />
           </Circle>

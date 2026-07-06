@@ -13,10 +13,10 @@ export const GistEmbed: React.FC<GistEmbedProps> = ({ url, file }) => {
         url={url}
         file={file}
         LoadingComponent={() => (
-          <Box 
-            display="flex" 
-            alignItems="center" 
-            justifyContent="center" 
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
             minH="100px"
             bg="neutral.900"
             borderRadius="md"
@@ -24,20 +24,16 @@ export const GistEmbed: React.FC<GistEmbedProps> = ({ url, file }) => {
             borderColor="neutral.700"
           >
             <Spinner size="md" color="cyan.500" />
-            <Text ml="3" color="neutral.400">Loading gist...</Text>
+            <Text ml="3" color="neutral.400">
+              Loading gist...
+            </Text>
           </Box>
         )}
         ErrorComponent={() => (
-          <Box 
-            p="4"
-            bg="red.900"
-            borderRadius="md"
-            border="1px solid"
-            borderColor="red.700"
-          >
+          <Box p="4" bg="red.900" borderRadius="md" border="1px solid" borderColor="red.700">
             <Text color="red.200">Failed to load gist</Text>
-            <Text 
-              as="a" 
+            <Text
+              as="a"
               href={url}
               target="_blank"
               rel="noopener noreferrer"

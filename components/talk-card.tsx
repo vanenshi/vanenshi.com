@@ -1,4 +1,4 @@
-import { Talk } from 'contentlayer/generated';
+import { Talk } from 'content-collections';
 import {
   Badge,
   Box,
@@ -74,7 +74,7 @@ export default function TalkCard(props: TalkCardProps) {
           </Text>
           <DarkMode>
             <Badge color="cyan.600" colorScheme="orange">
-              {talk.type}
+              Talk
             </Badge>
           </DarkMode>
         </HStack>
@@ -92,7 +92,7 @@ function TalkCoverImage(props: TalkCoverImageProps) {
   const { src, alt } = props;
   return (
     <Box position="relative" rounded="lg" overflow="hidden" width="18.75rem" height="10.5rem">
-      <Image alt={alt} src={src} fill style={{ objectFit: 'cover' }} priority />
+      <Image alt={alt} src={src} fill sizes="300px" style={{ objectFit: 'cover' }} priority />
     </Box>
   );
 }

@@ -1,11 +1,18 @@
 # vanenshi.com
 
-Personal portfolio + blog. Next.js (pages router), Contentlayer (MDX in `data/`), Chakra UI, deployed on Vercel.
+Personal portfolio + blog. Next.js (pages router), Content Collections (MDX in `data/`, config in `content-collections.ts`), Chakra UI, deployed on Vercel. Node 22, pnpm.
 
-- `yarn dev` — dev server. `yarn build` — contentlayer + next build + RSS (`scripts/rss.mjs`) + sitemap (`scripts/sitemap.mjs`). RSS/sitemap are chained into `build` directly — do NOT move them to a `postbuild` hook: yarn 4 (Berry) does not run npm lifecycle hooks, so Vercel would silently skip them.
-- New post: `yarn create:blog` (plop template), content lives in `data/blog/*.mdx`.
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
+
+
+- `pnpm dev` — dev server. `pnpm build` — content-collections + next build + RSS (`scripts/rss.mjs`) + sitemap (`scripts/sitemap.mjs`). RSS/sitemap are chained into `build` directly — do NOT move them to a `postbuild` hook: pnpm does not run npm `pre`/`post` lifecycle hooks by default, so Vercel would silently skip them.
+- New post: `pnpm create:blog` (plop template), content lives in `data/blog/*.mdx`.
 - Site-wide config in `site.config.ts` / `base-config.js` (siteUrl, profiles, titleTemplate).
-- **Node 20 pin is load-bearing** (`engines`, `.nvmrc`). Contentlayer's generated `index.mjs` uses `assert { type: 'json' }`, removed in node ≥ 22.12, so `scripts/rss.mjs`/`sitemap.mjs` break on newer node. Bumping node means first migrating off contentlayer (unmaintained) or switching the scripts to read `.contentlayer/generated/*/_index.json` via `fs`. Node 20 is past EOL (April 2026) — this migration is the pending follow-up.
+- Collections are defined in `content-collections.ts`; generated output lands in `.content-collections/generated/` (typed exports via the `content-collections` tsconfig path alias; `scripts/rss.mjs`/`sitemap.mjs` import the generated `allBlogs.js` directly — no import assertions, node-version-agnostic).
 
 ## SEO
 

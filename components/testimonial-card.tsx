@@ -1,5 +1,6 @@
-import { Testimonial } from 'contentlayer/generated';
+import { Testimonial } from 'content-collections';
 import { Box, Circle, HStack, Text } from '@chakra-ui/react';
+import { useMDXComponent } from '@content-collections/mdx/react';
 import Image from 'next/image';
 import { FullLinkedInLogo, LinkedInIcon } from './social-icons';
 
@@ -9,6 +10,7 @@ type TestimonialCardProps = {
 
 export default function TestimonialCard(props: TestimonialCardProps) {
   const { data: testimonial } = props;
+  const Component = useMDXComponent(testimonial.mdx);
   return (
     <Box bg="neutral.800" rounded="2xl" position="relative" padding="6" shadow="highlight">
       <LinkedInBadge />
@@ -32,13 +34,14 @@ export default function TestimonialCard(props: TestimonialCardProps) {
         fontSize="sm"
         lineHeight="tall"
         as="blockquote"
-        dangerouslySetInnerHTML={{ __html: testimonial.body.html }}
         sx={{
           'p + p': {
             marginTop: '4',
           },
         }}
-      />
+      >
+        <Component />
+      </Box>
     </Box>
   );
 }

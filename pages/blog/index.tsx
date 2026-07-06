@@ -55,8 +55,8 @@ export default function Page() {
             <FeaturedBlogCard data={allFeaturedBlogs[0]} />
           )}
           <SimpleGrid columns={{ base: 1, md: 2 }} mt="4rem" spacing="10">
-            {search.results.map((blog) => (
-              <BlogCard key={blog.title} data={blog} />
+            {search.results.map((blog, index) => (
+              <BlogCard key={blog.title} data={blog} priority={index === 0} />
             ))}
           </SimpleGrid>
         </Box>

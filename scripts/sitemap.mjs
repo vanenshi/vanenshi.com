@@ -1,12 +1,10 @@
 import { writeFileSync } from 'fs';
 import { globby } from 'globby';
 import prettier from 'prettier';
-import {
-  allBlogs,
-  allNewsletters,
-  allSnippets,
-} from '../.contentlayer/generated/index.mjs';
-import baseConfig from '../base-config.js';
+import allBlogs from '../.content-collections/generated/allBlogs.js';
+import allNewsletters from '../.content-collections/generated/allNewsletters.js';
+import allSnippets from '../.content-collections/generated/allSnippets.js';
+import * as baseConfig from '../base-config.js';
 
 function url(route, lastmod) {
   return `
@@ -18,7 +16,7 @@ function url(route, lastmod) {
 }
 
 async function generate() {
-  const prettierConfig = await prettier.resolveConfig('./.prettierrc.js');
+  const prettierConfig = await prettier.resolveConfig('./.prettierrc');
 
   // static, non-dynamic pages
   const pageFiles = await globby([
@@ -27,7 +25,7 @@ async function generate() {
     '!pages/_*/**',
     '!pages/api/**',
     '!pages/404.tsx',
-    '!pages/**/[[]*', // dynamic routes ([slug].tsx) — handled from contentlayer below
+    '!pages/**/[[]*', // dynamic routes ([slug].tsx) — handled from generated content below
   ]);
   const staticRoutes = pageFiles.map((page) => {
     const path = page.replace(/^pages/, '').replace(/\.tsx$/, '');
@@ -48,7 +46,7 @@ async function generate() {
     </urlset>
   `;
 
-  const formatted = prettier.format(sitemap, {
+  const formatted = await prettier.format(sitemap, {
     ...prettierConfig,
     parser: 'html',
     printWidth: 500, // keep long URLs on one line — whitespace inside <loc> trips some crawlers

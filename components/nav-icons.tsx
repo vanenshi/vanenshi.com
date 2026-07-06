@@ -110,4 +110,3 @@ export function CloseIcon(props: IconProps) {
     </svg>
   );
 }
-
