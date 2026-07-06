@@ -22,8 +22,8 @@ export default function ProjectPage() {
 
         <Box marginTop="vGutter">
           <Stack spacing="20">
-            {allProjects.map((project) => (
-              <ProjectCard key={project.title} data={project} />
+            {allProjects.map((project, index) => (
+              <ProjectCard key={project.title} data={project} priority={index === 0} />
             ))}
           </Stack>
         </Box>

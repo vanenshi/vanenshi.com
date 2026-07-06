@@ -24,3 +24,8 @@ public/feed.xml
 
 # typescript
 tsconfig.tsbuildinfo
+
+# .claude: keep only skills/, ignore everything else
+.claude/*
+!.claude/skills/
+.playwright-mcp/

@@ -17,9 +17,9 @@ export default function AuthorProfile() {
       <Box>
         <Heading size="md">{`Written by ${siteConfig.name} (${siteConfig.nickname})`}</Heading>
         <Text mt="4" lineHeight="taller">
-          {siteConfig.nickname} is a Software developer<Emoji label="Software developer">👨🏽‍💻</Emoji>.
-          He is passionate about helping startups to build new ideas. {siteConfig.nickname} is the
-          builder of{' '}
+          {siteConfig.nickname} is a Software developer
+          <Emoji label="Software developer">👨🏽‍💻</Emoji>. He is passionate about helping startups to
+          build new ideas. {siteConfig.nickname} is the builder of{' '}
           <Link color="cyan.600" href="https://www.synapsai.ai/">
             Synaps AI
           </Link>

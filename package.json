@@ -6,6 +6,7 @@
   "author": "Amir Shekari <vanenshi@gmail.com>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@11.10.0",
   "scripts": {
     "env:pull": "vercel env pull",

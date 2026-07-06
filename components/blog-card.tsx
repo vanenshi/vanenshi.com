@@ -8,17 +8,25 @@ type Field = 'publishedAt' | 'readingTime' | 'description' | 'title' | 'image' |
 
 type BlogCardProps = {
   data: Pick<Blog, Field>;
+  priority?: boolean;
 };
 
 export function BlogCard(props: BlogCardProps) {
-  const { data } = props;
+  const { data, priority } = props;
   const { title, publishedAt, image, readingTime, slug } = data;
   const date = formatDate(publishedAt);
 
   return (
     <LinkBox>
       <Box sx={{ aspectRatio: '16 / 10' }} rounded="lg" overflow="hidden" position="relative">
-        <Image src={image} alt={title} fill style={{ objectFit: 'cover' }} />
+        <Image
+          src={image}
+          alt={title}
+          fill
+          priority={priority}
+          sizes="(max-width: 768px) 100vw, 400px"
+          style={{ objectFit: 'cover' }}
+        />
       </Box>
 
       <Box flex="1" mt="5">

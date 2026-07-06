@@ -2,6 +2,13 @@
 
 Personal portfolio + blog. Next.js (pages router), Content Collections (MDX in `data/`, config in `content-collections.ts`), Chakra UI, deployed on Vercel. Node 22, pnpm.
 
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
+
+
 - `pnpm dev` — dev server. `pnpm build` — content-collections + next build + RSS (`scripts/rss.mjs`) + sitemap (`scripts/sitemap.mjs`). RSS/sitemap are chained into `build` directly — do NOT move them to a `postbuild` hook: pnpm does not run npm `pre`/`post` lifecycle hooks by default, so Vercel would silently skip them.
 - New post: `pnpm create:blog` (plop template), content lives in `data/blog/*.mdx`.
 - Site-wide config in `site.config.ts` / `base-config.js` (siteUrl, profiles, titleTemplate).

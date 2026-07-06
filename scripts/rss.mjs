@@ -1,7 +1,7 @@
 import { writeFileSync } from 'fs';
 import RSS from 'rss';
 import allBlogs from '../.content-collections/generated/allBlogs.js';
-import baseConfig from '../base-config.js';
+import * as baseConfig from '../base-config.js';
 
 async function generate() {
   const feed = new RSS({

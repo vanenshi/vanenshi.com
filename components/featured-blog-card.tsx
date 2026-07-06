@@ -38,7 +38,14 @@ export default function FeaturedBlogCard(props: BlogCardProps) {
         overflow="hidden"
         position="relative"
       >
-        <Image src={image} alt={title} priority fill style={{ objectFit: 'cover' }} />
+        <Image
+          src={image}
+          alt={title}
+          priority
+          fill
+          sizes="(max-width: 420px) 100vw, 420px"
+          style={{ objectFit: 'cover' }}
+        />
       </Box>
 
       <Box flex="1">

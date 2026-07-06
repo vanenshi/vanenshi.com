@@ -1,10 +1,4 @@
-import {
-  allBlogs,
-  allProjects,
-  allSnippets,
-  allTalks,
-  allTestimonials,
-} from 'content-collections';
+import { allBlogs, allProjects, allSnippets, allTalks, allTestimonials } from 'content-collections';
 
 export function getBlogTags(data = allBlogs) {
   const values = data.flatMap((blog) => blog.tags);

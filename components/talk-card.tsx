@@ -92,7 +92,7 @@ function TalkCoverImage(props: TalkCoverImageProps) {
   const { src, alt } = props;
   return (
     <Box position="relative" rounded="lg" overflow="hidden" width="18.75rem" height="10.5rem">
-      <Image alt={alt} src={src} fill style={{ objectFit: 'cover' }} priority />
+      <Image alt={alt} src={src} fill sizes="300px" style={{ objectFit: 'cover' }} priority />
     </Box>
   );
 }

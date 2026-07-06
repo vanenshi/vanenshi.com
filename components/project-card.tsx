@@ -8,10 +8,11 @@ import { AndroidIcon, AppleIcon, GithubIcon, WebsiteIcon } from './social-icons'
 
 type ProjectCardProps = {
   data: Project;
+  priority?: boolean;
 };
 
 export default function ProjectCard(props: ProjectCardProps) {
-  const { data: project } = props;
+  const { data: project, priority } = props;
   const Component = useMDXComponent(project.mdx);
 
   return (
@@ -60,6 +61,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         alt={project.title}
         rtl={project.rtl}
         objectPosition={project.objectPosition}
+        priority={priority}
       />
     </Flex>
   );
@@ -70,10 +72,11 @@ type ProjectImageCardProps = {
   alt: string;
   rtl?: boolean;
   objectPosition?: string;
+  priority?: boolean;
 };
 
 function ProjectImageCard(props: ProjectImageCardProps) {
-  const { src, alt, rtl, objectPosition = '-16%' } = props;
+  const { src, alt, rtl, objectPosition = '-16%', priority } = props;
   return (
     <Box
       flex={{ md: '1' }}
@@ -101,7 +104,14 @@ function ProjectImageCard(props: ProjectImageCardProps) {
           },
         }}
       >
-        <Image alt={alt} src={src} fill style={{ objectFit: 'cover', objectPosition }} />
+        <Image
+          alt={alt}
+          src={src}
+          fill
+          priority={priority}
+          sizes="(max-width: 900px) 100vw, 900px"
+          style={{ objectFit: 'cover', objectPosition }}
+        />
       </Box>
     </Box>
   );

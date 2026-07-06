@@ -1,4 +1,4 @@
-const { withContentCollections } = require('@content-collections/next');
+import { withContentCollections } from '@content-collections/next';
 
 const httpsDomainPattern = (domain) => {
   return {
@@ -12,7 +12,7 @@ const httpsDomainPattern = (domain) => {
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = withContentCollections({
+export default withContentCollections({
   images: {
     remotePatterns: [
       httpsDomainPattern('vanenshi.com'),

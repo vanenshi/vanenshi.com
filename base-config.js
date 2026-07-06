@@ -1,5 +1,3 @@
-module.exports = {
-  name: 'Amir Shekari',
-  nickname: 'Vanenshi',
-  siteUrl: 'https://vanenshi.com',
-};
+export const name = 'Amir Shekari';
+export const nickname = 'Vanenshi';
+export const siteUrl = 'https://vanenshi.com';

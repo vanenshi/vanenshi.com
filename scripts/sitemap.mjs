@@ -4,7 +4,7 @@ import prettier from 'prettier';
 import allBlogs from '../.content-collections/generated/allBlogs.js';
 import allNewsletters from '../.content-collections/generated/allNewsletters.js';
 import allSnippets from '../.content-collections/generated/allSnippets.js';
-import baseConfig from '../base-config.js';
+import * as baseConfig from '../base-config.js';
 
 function url(route, lastmod) {
   return `
@@ -16,7 +16,7 @@ function url(route, lastmod) {
 }
 
 async function generate() {
-  const prettierConfig = await prettier.resolveConfig('./.prettierrc.js');
+  const prettierConfig = await prettier.resolveConfig('./.prettierrc');
 
   // static, non-dynamic pages
   const pageFiles = await globby([
